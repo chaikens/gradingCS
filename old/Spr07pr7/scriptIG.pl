@@ -1,8 +1,20 @@
-#!/usr/local/bin/perl  -w
+#!/usr/bin/perl  -w
 # -w is for warnings; strongly recommended by Larry Wall, Perl's author
 
 use Cwd; #for cwd() function
 
+##########ARGUMENT(S)###################################################
+#  scriptIG.pl [--manual] \                                            #
+#    FULL_PATHNAME_OF_COMPRESSED_OR_UNCOMPRESSED_TAR                   #
+#  (full pathname is needed so the stat() function can get at the file #
+#   after chdir to the test compile directory was done.)               #
+#########ENVIRONMENT SETTINGS###########################################
+# TANAME short grader name used in files and directory names.          #
+# PATH must contain . (current working dir.).                          #
+#   This was the old-fashioned default. We won't make this happen in   #
+#   the script below for security reasons.  Perhaps we should use full #
+#   pathname when executing student submitted shell scripts and/or     #
+#   programs under test that we had built.                             #
 ########## INITIALIZERS ################################################
 # must be put before subroutine definitions                            #
 #    (discovered by trial and error.  Undocumented??                   #
@@ -221,9 +233,9 @@ $DUEDaysPer100PercentOff = 4.0;
 #Set to > 1 to give bonus for earliness.
 $DUEearlyBonusFactor = 1.0;
 ###################### Directory Info ########################
-
-$ClassAcctHomeDir = "/home1/c/a/acsi310";
-$ProjGradingDir = "$ClassAcctHomeDir/private/Spr07grading/pr7";
+chomp( $cwd = `pwd`);
+$ClassAcctHomeDir = $cwd . "/acsi310";
+$ProjGradingDir = "$ClassAcctHomeDir/private/pr7";
 
 $TestCaseDir       = "$ClassAcctHomeDir/pr7/GradingCases";
 
@@ -335,7 +347,7 @@ $ManualFlag = 0;       # Set true when script's first cmd line arg is --manual.
 $UserId = "none-yet";
 my($GLOBALtestnum) = "unset";
 $diffParams = "-w -i -b";
-$diffDir = "/usr/local/bin";
+$diffDir = "/usr/bin";
 $diffName = "diff";
 $diffCommand = "$diffDir/$diffName $diffParams ";
 $FilesReceived = ""; #Rel. pathnames of files and dirs. received 1 per line.
@@ -446,7 +458,7 @@ sub AddPenaltyorComments($)
 
 
 sub gradeOneStudent(@)
-# $_[0] is the pathname of the usually compressed tar file
+# $_[0] is the (full) pathname of the usually compressed tar file
 # that contains the submission.  Sometimes it is not compressed..
 {
     if( @_ < 1 )
@@ -1192,7 +1204,7 @@ sub tryBuildScript
 {
     my(@exenames) = @PartsIGexeName;
     if($OneIGexeName){@exenames=(@exenames,$OneIGexeName);}
-    if( not `file "build.sh"` =~ /.*executable.*script/ )
+    if( not `file "build.sh"` =~ /(.*executable.*script)|(.*script.*executable)/ )
     {
 	print GROUT "The result of our automatic attempt to run build.sh\n";
 	print GROUT "is missing or non-executable or non-script build.sh\n";
@@ -1207,7 +1219,8 @@ sub tryBuildScript
     {
 	return 0;
     }
-    my($buildout) = `build.sh`;
+
+    my($buildout) = `build.sh`;  
     print "$buildout\n";
 
     if( (not -d $TestCWD) and ($TestCompileDir ne $TestCWD ))
@@ -1636,6 +1649,10 @@ sub scoreCheckLate()
     my(($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst))=
 	localtime( $cur_time );
 
+    print "localtime returned:";
+    print localtime( $cur_time );
+
+
     my(($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
 	$atime,$mtime,$ctime,$blksize,$blocks)) = stat($_[0]);
 
@@ -1780,13 +1797,13 @@ sub runInteractiveTestCases($$$)
 
 #   (@TestInFiles + 0) puts the array in a "numeric context"
 #   where it will be evaluated to its length.  Sorry Ed. Dj.
-    scoreStartTestCases( @TestInFiles + 0 , $valueInteractiveTests);
-
-
     if ( @TestInFiles == 0)
     {
 	return;
     }
+    scoreStartTestCases( @TestInFiles + 0 , $valueInteractiveTests);
+
+
 
     $GLOBALtestnum = 0;
     my($testFileName_txt);   #file containing test explanation

@@ -1,0 +1,8 @@
+:locate
+Non existant line
+:locate
+Third line
+:removeLine
+Third line
+:display
+:quit

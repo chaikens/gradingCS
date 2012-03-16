@@ -1,0 +1,34 @@
+Here are examples of cases where you must do more work
+and then charge the student a penalty:
+
+(1) the link command in build.sh builds a file named
+testPile, not test_Pile  (The specification said the 
+build.sh script must create a file with the test_Pile
+name.  The grading script tried and failed to move test_Pile
+from the building dir. to the testing dir.
+
+You should manually move 
+/tmp/310TA(your login)/project1/testPile
+to
+/tmp/310TA(your login)/_TESTING_/test_Pile
+(notice the spelling correction..so the grading 
+ script can run test_Pile)
+
+When the script prompts for it, deduct 5 pts
+for this and things that are similarly simple.
+
+(2) In addition to some good looking RCS databases,
+the same first student submitted a quite elaborate
+and good looking log file, in which the student 
+said he/she messed up with the RCS directions...
+Here, give full credit for RCS.
+
+If they give some other kind of log, but omit
+the RCS databases, give full credit but write 
+an comment that RCS is required for credit in 
+future projects.
+
+(3) Take off 0.5 (50%) if the student didn't
+write pre/post conditions in header files in addition
+to the ones I gave them.
+

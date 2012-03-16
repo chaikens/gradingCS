@@ -1,0 +1,12 @@
+:insert
+1
+First line
+:insert
+2
+Second line
+:display
+:replace
+2
+NEW SECOND LINE
+:display
+:quit
