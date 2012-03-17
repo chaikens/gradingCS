@@ -58,8 +58,9 @@ sub loadTestCompileDir($$)
 
     $command = "(cd $TestCompileDir; find . -name '*' -print)";
     my $FilesReceived = `$command`;
+    $FilesReceived =~ s/\.\s+//;
     print "We received the following files:\n";
-    print "$FilesReceived\n\n";
+    print "$FilesReceived";
     my @FilesReceivedL = split /\s+/, $FilesReceived;
     return ($FilesReceived, @FilesReceivedL);
 
