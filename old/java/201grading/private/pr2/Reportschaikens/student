@@ -1,6 +1,6 @@
-Subject: CSI310 Grading Report
+Subject: CSI201 Grading Report
 
-User Id:student,  Project Name:  pr7
+User Id:student,  Project Name:  pr2
 
 This is the automatically generated grading output
 
@@ -9,16 +9,40 @@ please contact your TA chaikens. You have 2 weeks
 from the receipt of this message to request a grade change,
 after which this becomes your permanent score for this assignment.
 
-Submission doesn't consist of one directory.
-Points for Single Directory Required:: 0/5
-The result of our automatic attempt to run build.sh
-is missing or non-executable or non-script build.sh
-Results of manual investigations follow.
-Points for Build script submitted/worked OK: 10/10
-Points for Modularization: Class header, impl, templates; main().: 15/15
-Functional test results up to 70 points.
+Functional test results up to 100 points.
 
 
-Begin reports of find-path tests..
+Begin reports of whole-vignette tests..
 
 BEGIN NEW TEST REPORT---------
+Name of test: whole, see
+   http://www.cs.albany.edu/~sdc/CSI201/Spr12/Proj/Proj2/whole-vignette/whole.txt
+We run:
+Picture p = new Picture( our test file name );
+p.vignette(10,10, 300, 200, java.awt.Color.green);
+p.show();
+(1) Black in the middle.
+(2) White at each of 4 corners.
+(3) Grey gradations in between.
+TA: Type any letter and ENTER after seeing whether or not
+a picture is displayed.  Then enter rating.
+-------------Results-----------------------------:
+Out->Center x= 320.0
+Out->Center y= 240.0
+Out->
+...Program failed this test........
+
+Test whole rated 0% for 0 out of 80 points
+
+
+Interactive grading of rect-vignette cannot be done.
+
+
+
+Score before deducting points for lateness: 0
+Your project was turned in approximately 0 days late.
+Grade multiplied by approximately 1
+
+
+Total score for this project: 0 points.
+

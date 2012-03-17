@@ -1,2 +1,7 @@
+We run:
+Picture p = new Picture( our test file name );
+p.vignette(10,10, 300, 200, java.awt.Color.green);
 90 points: vignette within the rectangle.
 100 points: vignette within the circle.
+TA: Type any letter and enter after seeing whether or not
+a picture is displayed.  Then enter rating.

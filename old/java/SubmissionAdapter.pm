@@ -7,7 +7,7 @@ require Exporter;
 
 use Time::Local;
 
-my $verbose = false;
+my $verbose = 0;
 
 sub submissionTime($)
 {
@@ -28,10 +28,11 @@ sub getUserId($)
     return( $dirName );
 }
 
-print submissionTime("/sda15/GIT/gradingCS/old/Spr07pr7/submissions/student.2012-03-03-04-57-02");
-print "\n";
-print getUserId("/sda15/GIT/gradingCS/old/Spr07pr7/submissions/student.2012-03-03-04-57-02");
-print "\n";
+#UNIT TESTS
+#print submissionTime("/sda15/GIT/gradingCS/old/Spr07pr7/submissions/student.2012-03-03-04-57-02");
+#print "\n";
+#print getUserId("/sda15/GIT/gradingCS/old/Spr07pr7/submissions/student.2012-03-03-04-57-02");
+#print "\n";
 
 sub loadTestCompileDir($$)
 {
@@ -67,11 +68,12 @@ sub loadTestCompileDir($$)
 }
 
 
-my ($scalar, @array) =
-loadTestCompileDir("/tmp/SubmissionAdapterTesting", "/sda15/GIT/gradingCS/old/Spr07pr7/submissions/student.2012-03-03-04-57-02");
-print "scalar ret:";
-print $scalar;
-print "\n\narray ret:";
-print @array;
-print ":\n";
+#my ($scalar, @array) =
+#loadTestCompileDir("/tmp/SubmissionAdapterTesting", "/sda15/GIT/gradingCS/old/Spr07pr7/submissions/student.2012-03-03-04-57-02");
+#print "scalar ret:";
+#print $scalar;
+#print "\n\narray ret:";
+#print @array;
+#print ":\n";
 
+1;

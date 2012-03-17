@@ -87,8 +87,7 @@ $Course = "CSI201";   #Course name/nr for mail subject line.
 #For submission directory, grading dir, insertion in the grade reports, etc
 $ProjectName        = "pr2";
 
-$exeName            = "**NOT**INITIALIZED**HERE***"; 
-# Required when script builds it or runs make
+
 
 $Complain_to = #"Professor Chaiken";
                "your TA $TAUserName";
@@ -99,15 +98,19 @@ $Professor = "Professor Chaiken";
 #Files not to be submitted. Wildcards ok, will glob
 my(@UnwantedFiles)  = ("*.class");
 
+$filesWeBuild = "Picture.class";
 
 $DoNonFunReqCheck = 1;  # 1 to call NonFunReqCheck function to grade
                         # non-functional requirements
 
 $NonFunGradInstructions = 
-"Ctl-Z, Examine Source Files now, grade for 
- (1) Modularization:Separate files; headers, implementations, templates, and main().
- (2) Separate modules for Card, Pile and Hand, effectively.
-\n";
+"Ctl-Z, Examine Source Files now.\n";
+
+#examples of non-functional requrements:
+#, grade for 
+# (1) Modularization:Separate files; headers, implementations, templates, and main().
+# (2) Separate modules for Card, Pile and Hand, effectively.
+#\n";
 
 
 
@@ -133,7 +136,6 @@ $ReportFilePoints   = 0;
 
 $RequestOneDirBeSubmitted = 0;
 $OneDirSubmissionPoints = 0; 
-$RCSRequired = 0;            # Submission will be checked out of RCS.
 $MakefilePoints = 0;         # Used only when $IsCompilable is true.
 $SimpleMakefileRequired = 0; # Request TA to examine Makefile for being Simple.
 $RevisionLogRequired = 0;    # Self-documenting.
@@ -149,7 +151,7 @@ $FunctionCommentsPoints = 0; # Self-documenting.
 $FunctionPrePostCondPoints = 0; # Self-documenting. 
 $VariableCommentsPoints = 0; # Self-documenting. 
 $MultipleFilesPoints = 0;    # Self-documenting. 
-$ModularizationStandardsPoints = 15; # # Self-documenting.
+$ModularizationStandardsPoints = 0; # # Self-documenting.
 $TestCasesPoints = 0;        # Self-documenting. 
 $TestingScriptPoints = 0;    # Self-documenting. 
 $ManualBuildOnly = 0;        # if 1, TA must always interrupt script, 
@@ -249,7 +251,15 @@ $TestCaseDir       = "$ClassAcctHomeDir/pr2/GradingCases";
 $GradersBuildCommand = "$TestCaseDir/gradersBuilder";
 
 
+$publicTestCaseBaseURL = 
+    "http://www.cs.albany.edu/~sdc/CSI201/Spr12/Proj/Proj2/";
 
+sub URLize($)
+{
+    my($x) = $_[0];
+    $x =~ s/$TestCaseDir\//$publicTestCaseBaseURL/;
+    return $x;
+}
 
 $JavaClassPathCourse = 
     "/home/seth/Courses/CSI201/public_html/CSI201/Spr12/201Stuff/bookClasses-7-22-09/bookClasses";
@@ -449,7 +459,8 @@ sub AddPenaltyorComments($)
 	{
 	    if(open(TXT, "<$PenaltyPolicyFile") )
 	    {
-		print GROUT "\n--- Policy from $PenaltyPolicyFile :\n";
+		print GROUT 
+"\n--- Policy from ".URLize($PenaltyPolicyFile)." :\n";
 		while ($line = <TXT>) 
 		{
 		    print GROUT "   $line";
@@ -1281,7 +1292,7 @@ sub tryBuildWithCommand
 
     if ($status == 0)
     {    
-#	print  GROUT "--- Compilation successful: $compile_return\n";
+#	print  GROUT "--- Compilation successful: $compileOutput\n";
 	scoreMakeSuccess();
 	$success=1; #true 
     } 
@@ -1299,9 +1310,11 @@ sub tryBuildWithCommand
 	}
 	else
 	{
-	    print GROUT  "Could not generate the executable $exeName from your files.\n";
+	    print GROUT  "Could not generate the files \n";
+	    print GROUT $filesWeBuild;
+	    print GROUT "\n from your submission.\n";
 	    print GROUT "--- Computer-guessed and manual comilation attempts failed.\n";
-	    print GROUT "--- Compilation errors. ($compile_return)\n";
+	    print GROUT "--- Compilation errors. ($compileOutput)\n";
 	    print GROUT "--- Compile command output:\n";
 
 	    open(GPP, "<$CompileMessageFile");
@@ -1837,7 +1850,8 @@ print
 	if( -e $testFileName_infname )
 	{
 	    system("cp $testFileName_infname $TestCWD");
-	    print GROUT "--- Copying input file:  $testFileName_infname\n";
+	    print GROUT 
+"--- Copying input file:  ".URLize($testFileName_infname)."\n";
 	}
 
 	# Run it, filtering if necessary
@@ -1851,10 +1865,12 @@ print
 	{
 	    #and read it into $cmdlineArgs if it exists 
 	    $test_command = read_first($testFileName_cmd);
-	    print GROUT "--- Test cmd file:    $testFileName_cmd\n";
+	    print GROUT 
+"--- Test cmd file:    ". URLize($testFileName_cmd) . "\n";
 	    if( -e $testFileName_stdin )
 	    {
-		print GROUT     "--- Test stdin file:  $testFileName_stdin\n";
+		print GROUT     
+"--- Test stdin file:  ". URLize($testFileName_stdin) . "\n";
 		$test_command = "( $test_command ) < $testFileName_stdin";
 	    }
 	}
@@ -1863,15 +1879,19 @@ print
 	    $test_command = $exeName;
 	    if( -e $testFileName_stdin )
 	    {
-		print GROUT     "--- Test stdin file:  $testFileName_stdin\n";
+		print GROUT     
+"--- Test stdin file:  ". URLize($testFileName_stdin)."\n";
 		$test_command = "( $test_command ) < $testFileName_stdin";
 	    }
 	}
 
-	print GROUT     "--- Test command:     $test_command\n";
-	print GROUT     "--- Ref stdout file:  $testFileName_stdout\n";
+	print GROUT     
+"--- Test command:     ".URLize($test_command)."\n";
+	print GROUT     
+"--- Ref stdout file:  ".URLize($testFileName_stdout)."\n";
 	if( $testFileName_outfname ne "" ) {
-	print GROUT     "--- Ref named outfile:$testFileName_outfname\n";
+	print GROUT     
+"--- Ref named outfile:".URLize($testFileName_outfname)."\n";
         }
 	
 
@@ -2030,7 +2050,8 @@ print
 			# Put in the TA instructions if any.
 			if(open(TXT, "<$testFileName_txt") )
 			{
-			    print GROUT "\n--- Our grading policy from $testFileName_txt :\n";
+			    print GROUT 
+"\n--- Our grading policy from ".URLize($testFileName_txt)." :\n";
 			    while ($line = <TXT>) 
 			    {
 				print GROUT "   $line";
@@ -2077,7 +2098,8 @@ print
 			# Put in the TA instructions if any.
 			if( open(TXT, "<$testFileName_txt") )
 			{
-			    print GROUT "\n--- Our grading policy from $testFileName_txt :\n";
+			    print GROUT 
+"\n--- Our grading policy from ".URLize($testFileName_txt)." :\n";
 			    while ($line = <TXT>) 
 			    {
 				print GROUT "   $line";
@@ -2210,7 +2232,8 @@ sub runTestCasesPhase2
 	if( -e $testFileName_infname )
 	{
 	    system("cp $testFileName_infname $TestCWD");
-	    print GROUT "--- Copying input file:  $testFileName_infname\n";
+	    print GROUT 
+"--- Copying input file:  ".URLize($testFileName_infname)."\n";
 	}
 
 	# Run it, filtering if necessary
@@ -2224,10 +2247,12 @@ sub runTestCasesPhase2
 	{
 	    #and read it into $cmdlineArgs if it exists 
 	    $test_command = read_first($testFileName_cmd);
-	    print GROUT "--- Test cmd file:    $testFileName_cmd\n";
+	    print GROUT 
+"--- Test cmd file:    ".URLize($testFileName_cmd)."\n";
 	    if( -e $testFileName_stdin )
 	    {
-		print GROUT     "--- Test stdin file:  $testFileName_stdin\n";
+		print GROUT     
+"--- Test stdin file:  ".URLize($testFileName_stdin)."\n";
 		$test_command = "( $test_command ) < $testFileName_stdin";
 	    }
 	}
@@ -2236,15 +2261,19 @@ sub runTestCasesPhase2
 	    $test_command = $exeName;
 	    if( -e $testFileName_stdin )
 	    {
-		print GROUT     "--- Test stdin file:  $testFileName_stdin\n";
+		print GROUT     
+"--- Test stdin file:  ".URLize($testFileName_stdin)."\n";
 		$test_command = "( $test_command ) < $testFileName_stdin";
 	    }
 	}
 
-	print GROUT     "--- Test command:     $test_command\n";
-	print GROUT     "--- Ref stdout file:  $testFileName_stdout\n";
+	print GROUT     
+"--- Test command:     ".URLize($test_command)."\n";
+	print GROUT     
+"--- Ref stdout file:  ".URLize($testFileName_stdout)."\n";
 	if( $testFileName_outfname ne "" ) {
-	print GROUT     "--- Ref named outfile:$testFileName_outfname\n";
+	print GROUT     
+"--- Ref named outfile:".URLize($testFileName_outfname)."\n";
         }
 	
 
@@ -2402,7 +2431,8 @@ sub runTestCasesPhase2
 			# Put in the TA instructions if any.
 			if(open(TXT, "<$testFileName_txt") )
 			{
-			    print GROUT "\n--- Our grading policy from $testFileName_txt :\n";
+			    print GROUT 
+"\n--- Our grading policy from ".URLize($testFileName_txt)." :\n";
 			    while ($line = <TXT>) 
 			    {
 				print GROUT "   $line";
@@ -2449,7 +2479,8 @@ sub runTestCasesPhase2
 			# Put in the TA instructions if any.
 			if( open(TXT, "<$testFileName_txt") )
 			{
-			    print GROUT "\n--- Our grading policy from $testFileName_txt :\n";
+			    print GROUT 
+"\n--- Our grading policy from ".URLize($testFileName_txt)." :\n";
 			    while ($line = <TXT>) 
 			    {
 				print GROUT "   $line";
@@ -3015,7 +3046,8 @@ my($rating) = "?";
 if( -e $testFileName_stdin )
 {
     open(IGTESTIN, "<$testFileName_stdin") or die "Can't open $testFileName_stdin\n";
-    #print GROUT "--- Test stdin file:  $testFileName_stdin\n";
+    #print GROUT 
+#"--- Test stdin file:  ".URLize($testFileName_stdin)."\n";
     $FileInOK = "(CX:from in.file)";
     print "TA:Test input may be inserted 1 line at a time 
     from $testFileName_stdin 
@@ -3030,6 +3062,7 @@ else
 
 my($StudentReportBrief) = "";
 my($StudentReportLong) = "";
+
 IGwriteGROUTHeading();
 
 my($TAinstructions) = "";
@@ -3043,8 +3076,9 @@ if( -e $TAInstrfname )
 "\n------ current test's TA instructions($testName.txt) file ---------\n";
 	
 	$StudentReportBrief .= "Name of test: $testName, see
-   $TAInstrfname\n";
-	$StudentReportLong .= "Name of test: $testName,  ......\n";
+   ".URLize($TAInstrfname)."\n";
+	$StudentReportLong .= "Name of test: $testName, see
+   ".URLize($TAInstrfname)."\n";
 	while ($line = <IGTXTFILE>) 
 	{
 	    $TAinstructions .=    "$line";
@@ -3068,11 +3102,6 @@ else
 my($WDR,$RDR);
 
 chdir $TestCWD;
-
-print "ABOUT TO RUN PROGRAM TO TEST\n";
-print `pwd`;
-print "\nI think thats our working dir\n";
-
 
 my($pid) = open3($WDR, $RDR, "", $exeName);
 
