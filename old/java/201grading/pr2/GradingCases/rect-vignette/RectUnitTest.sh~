@@ -1,0 +1,5 @@
+#! /bin/bash
+
+javac RectUnitTest.java
+java RectUnitTest
+

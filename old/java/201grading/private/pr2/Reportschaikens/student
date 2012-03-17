@@ -1,0 +1,24 @@
+Subject: CSI310 Grading Report
+
+User Id:student,  Project Name:  pr7
+
+This is the automatically generated grading output
+
+If you have any questions about your grade on this program,
+please contact your TA chaikens. You have 2 weeks
+from the receipt of this message to request a grade change,
+after which this becomes your permanent score for this assignment.
+
+Submission doesn't consist of one directory.
+Points for Single Directory Required:: 0/5
+The result of our automatic attempt to run build.sh
+is missing or non-executable or non-script build.sh
+Results of manual investigations follow.
+Points for Build script submitted/worked OK: 10/10
+Points for Modularization: Class header, impl, templates; main().: 15/15
+Functional test results up to 70 points.
+
+
+Begin reports of find-path tests..
+
+BEGIN NEW TEST REPORT---------

@@ -1,0 +1,2 @@
+90 points: vignette within the rectangle.
+100 points: vignette within the circle.

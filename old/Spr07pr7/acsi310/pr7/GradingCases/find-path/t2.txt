@@ -1,2 +1,0 @@
-(0.5) Reprint input
-(0.5) Print No solutions 

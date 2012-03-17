@@ -1,0 +1,3 @@
+(1) Black in the middle.
+(2) White at each of 4 corners.
+(3) Grey gradations in between.

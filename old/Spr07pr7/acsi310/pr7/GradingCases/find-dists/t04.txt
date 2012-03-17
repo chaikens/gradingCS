@@ -1,1 +1,0 @@
-Eleventh test case to print the minimum number of solutions.
