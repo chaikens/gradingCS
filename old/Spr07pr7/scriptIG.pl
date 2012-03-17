@@ -1,6 +1,10 @@
 #!/usr/bin/perl  -w
 # -w is for warnings; strongly recommended by Larry Wall, Perl's author
 
+use SubmissionAdapter qw(submissionTime getUserId loadTestCompileDir);
+#SubmissionAdapter.pm adapts system specific info to the general script.
+#
+
 use Cwd; #for cwd() function
 
 ##########ARGUMENT(S)###################################################
@@ -458,8 +462,7 @@ sub AddPenaltyorComments($)
 
 
 sub gradeOneStudent(@)
-# $_[0] is the (full) pathname of the usually compressed tar file
-# that contains the submission.  Sometimes it is not compressed..
+# $_[0] is the (full) pathname of the submission directory
 {
     if( @_ < 1 )
     {
@@ -519,7 +522,8 @@ sub gradeOneStudent(@)
     }
     if( $SubmissionPathName ) 
     {
-	loadTestCompileDir( $SubmissionPathName );
+	($FilesReceived, @FilesReceivedL)
+	    =loadTestCompileDir( $TestCompileDir,  $SubmissionPathName );
     }
 
 #    if( $ManualFlag && askYes("Check unwanted files?") )
@@ -650,89 +654,7 @@ sub gradeOneStudent(@)
 }
 
 
-sub loadTestCompileDir
-# $_[0] is the pathname of the usually compressed tar file
-# that contains the submission.  Sometimes it is not compressed..
-# This subroutine gets the submission into the testing directory.
-# The v option in the tar command here makes it also
-# print out the names of the submitted files.
-{
-    unless( -d $TestCompileDir )
-    {
-	mkdir($TestCompileDir,0700) || die( "Cannot mkdir $TestCompileDir\n" );
-	# mode 0700 begins with 0 to tell perl it is in octal
-    }
 
-    if ( $verbose ) { print "run rm -rf $TestCompileDir/*\n"; }
-    !system("rm -rf $TestCompileDir/*")||die("Cannot clear $TestCompileDir\n");
-    # r for delete subdirs too, since some people submit them
-    # f to suppress error message when the dir is empty
-
-    if( $verbose ) { print "loadTestCompileDir working on $_[0]\n"; }
-
-    my ( $cat ) = "zcat";
-
-#    unless ( $_[0] =~ $compressed_file_pattern )
-#    This didnt work!!!! under version 5.003
-
-    unless ( $_[0] =~ /[.]*\.Z$/ )
-    {
-	print "$_[0] not a compressed file-not much submitted!\n";
-	$cat = "cat";
-    }
-
-    if( $verbose ) {print "$cat is the cat to use.\n";}
-    my( $v ) = "";
-    if( $verbose ) { $v = "v"; }
-    my( $command ) = "$cat $_[0] | (cd $TestCompileDir; tar xf$v - )" ;
-    if( $verbose ) {print "$command \n";}
-
-    system($command );
-
-    $command = "(cd $TestCompileDir; find . -name '*' -print)";
-    $FilesReceived = `$command`;
-    print "We received the following files:\n";
-    print "$FilesReceived\n\n";
-    @FilesReceivedL = split /\s+/, $FilesReceived;
-
-#    if( $TestCompileDir ne $TestCWD )
-#    {
-#	mkdir($TestCWD,0700) || die( "Cannot mkdir $TestCompileDir\n" );
-#	# mode 0700 begins with 0 to tell perl it is in octal
-#    }	
-
-    if($RCSRequired)
-    {
-	my( $command ) = "find $TestCompileDir -name '*,v' -print";
-	my( $rcsfiles );
-	$rcsfiles = `$command`;
-	print "\nThe following RCS databases were received:\n";
-	print "$rcsfiles\n\n";
-	return;
-
-	if (opendir(DIR, "$TestCompileDir/RCS") or
-	    opendir(DIR, "$TestCompileDir") )
-	{
-	    while (defined ($file_name = readdir(DIR))) {
-		next if $file_name =~ /^\.\.?$/; #Skip entries . and ..
-		
-		@files_name = split(/,/, $file_name);
-		$fp_file_name = "$TestCompileDir/$files_name[0]";
-		if ( $verbose ) {print "$fp_file_name\n";}
-		system("rcs -M -u $fp_file_name");
-		system("co -l $fp_file_name");
-	    }
-	}
-    }
-}
-
-sub getUserId
-{
-    my( $UserId ) = $_[0];
-    $UserId =~ s#.*/##;
-    $UserId =~ s#.Z##;
-    return( $UserId );
-}
 
 sub lookupUserName($)
 {
@@ -1644,22 +1566,13 @@ sub scoreOneTest($$)
 
 sub scoreCheckLate()
 {
-    my($cur_time)=time();
+    
+    my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst);
+	
+    #my(($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
+	#$atime,$mtime,$ctime,$blksize,$blocks)) = stat($_[0]);
 
-    my(($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst))=
-	localtime( $cur_time );
-
-    print "localtime returned:";
-    print localtime( $cur_time );
-
-
-    my(($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
-	$atime,$mtime,$ctime,$blksize,$blocks)) = stat($_[0]);
-
-
-    print "\n";
-    print "The current date is     : ", $cur_time, " - ",
-    $mon, "/", $mday, "/", $year, " ", $hour, ":", $min, ":", $sec, "\n";
+    my($mtime) = submissionTime($_[0]);
 
     ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)=localtime($mtime);
 

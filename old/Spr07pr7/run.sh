@@ -9,12 +9,8 @@ mkdir acsi310/private/pr7
 mkdir acsi310/pr7
 mkdir acsi310/pr7/GradingCases
 touch acsi310/pr7/GradingCases/penalties
-cd student
-make clean
-cd ..
-tar cf student.tar student
 
 PATH=$PATH:.  #Old fashioned setting.
 
-./scriptIG.pl `pwd`/student.tar
+./scriptIG.pl `pwd`/submissions/student.2012-03-03-04-57-02
 
