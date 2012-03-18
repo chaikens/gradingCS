@@ -279,16 +279,16 @@ $OneIGPoints = 0;
 
 $PenaltyPolicyFile = "$TestCaseDir/penalties";
 
-@PartsIGList = ("make-collage");
+@PartsIGList = ("phase-one", "phase-two");
 @PartsIGexeName = (#"$TestCaseDir/make-collage/run-main.pl"
                    );
 @PartsIGTestCaseDir =
-    ("$TestCaseDir/make-collage"  );
+    ("$TestCaseDir/phase-one", "$TestCaseDir/phase-two" );
 @PartsIGPenaltyPolicyFile =
     ("$TestCaseDir/penalties"   
      );
 
-@PartsIGPoints = (20);
+@PartsIGPoints = (25,25,25,25);
 
 ################# Code Project Specific Special Pretests HERE.
 sub ProjectSpecificSpecialPretests()
@@ -3072,7 +3072,7 @@ sub GradeInteractiveCase($$$$)
 $IGtimeout = #20.25; #second
     1.0;
 $IGReadMAX = 2000;
-$IGnShow = 250;
+$IGnShow = 2000;
 ##################################################################
 
 $IGGotSIGPIPE = 0;
