@@ -1,0 +1,5 @@
+cp /sda15/GIT/gradingCS/old/java/310grading/pr5/tests/*.jpg .
+export CLASSPATH=.:/home/seth/Courses/CSI310/public_html/CSI310/Spr12/310Stuff/java-source
+javac *.java
+
+
