@@ -5,6 +5,8 @@ use SubmissionAdapter qw(submissionTime getUserId loadTestCompileDir);
 #SubmissionAdapter.pm adapts system specific info to the general script.
 #
 
+use JavaAnalyzers qw(findMainClassInteractively);
+
 use Cwd; #for cwd() function
 
 ##########ARGUMENT(S)###################################################
@@ -265,7 +267,7 @@ sub URLize($)
 }
 
 $JavaClassPathCourse = 
-    "/home/seth/Courses/CSI310/public_html/CSI310/Spr12/310Stuff/java-source";
+    "$ProjGradingDir/classes";
 $JavaClassPathProject = "";
 $JavaClassPathGrading = ".:$JavaClassPathProject:$JavaClassPathCourse";
 $ENV{CLASSPATH} = $JavaClassPathGrading;
@@ -278,7 +280,7 @@ $OneIGPoints = 0;
 $PenaltyPolicyFile = "$TestCaseDir/penalties";
 
 @PartsIGList = ("make-collage");
-@PartsIGexeName = ("$TestCaseDir/make-collage/run-main.pl"
+@PartsIGexeName = (#"$TestCaseDir/make-collage/run-main.pl"
                    );
 @PartsIGTestCaseDir =
     ("$TestCaseDir/make-collage"  );
@@ -299,9 +301,40 @@ sub ProjectSpecificSpecialPretests()
 #	@PartsIGTestCaseDir = ("$TestCaseDir/nocolon");
 #    }
 }
+############################################################
+#
+sub ProjectSpecificBuilding()
+{
 
+    my $mainClass = findMainClassInteractively($TestCompileDir);
+    if( ! $mainClass )
+    {
+	print GROUT "We could not find or build a class with the\n
+public static void main(String[])\n
+method, so we cannot test your submission.\n";
+	return 0;
+    }
+
+    my $submittedProgRunCommand = "java $mainClass";
+    my $i;
+    if(@PartsIGList)
+    {
+	for ($i = 0; $i < @PartsIGList; $i++)
+	{
+	    $PartsIGexeName[$i] = $submittedProgRunCommand;
+	}
+    }
+    if($OneIGTestCaseDir)
+    {
+	$OneIGexeName = $submittedProgRunCommand;
+    }
+    return 1;
+}
+
+############################################################
 
 #$TestCaseDirPhase2 = "$ClassAcctHomeDir/Proj1/GradingCases/part1";
+
 
 # where the test cases and reference output will be found
 # standard test case names (for executable programs):
@@ -591,7 +624,7 @@ sub gradeOneStudent(@)
 	{
 	    print "TA:FAILURE building with ";
 	}
-	print "$GradersBuildCommand\n";
+	print "\n$GradersBuildCommand\n";
     }
 
 
@@ -642,27 +675,33 @@ sub gradeOneStudent(@)
     if ( $BuildSuccessful )
     {
 	ProjectSpecificSpecialPretests();
-
+	if( ! ProjectSpecificBuilding() )
+	{
+	    $BuildSuccessful = 0;
+        }
+    }
+    if( $BuildSuccessful )
+    {
 	if(@PartsIGList)
 	{
 	    my($i);
 	    for($i=0; $i<@PartsIGList; $i++)
 	    {
 		if(
-		   askYes(
+		    askYes(
 "\n\nCan you grade $PartsIGList[$i] interactively?") )
 		{
 		    print GROUT
-"\n\nBegin reports of $PartsIGList[$i] tests..\n";
+			"\n\nBegin reports of $PartsIGList[$i] tests..\n";
 		    runInteractiveTestCases(
 			$PartsIGTestCaseDir[$i],#Directory
 			$PartsIGexeName[$i],	#exeName
 			$PartsIGPoints[$i]	#Value
-						);
+			);
 		}
 		else
 		{
-		    print GROUT 
+			print GROUT 
 "\n\nInteractive grading of $PartsIGList[$i] cannot be done.\n\n";
 		}
 		print "($PartsIGList[$i])";
@@ -674,12 +713,12 @@ sub gradeOneStudent(@)
 	if($OneIGTestCaseDir)
 	{
 	    print GROUT
-"\n\nBegin reports of tests..\n";
+		"\n\nBegin reports of tests..\n";
 	    runInteractiveTestCases(
-		   $OneIGTestCaseDir,          #Directory
-		   $OneIGexeName,	      #exeName
-		    $OneIGPoints	      #Value
-					);
+		$OneIGTestCaseDir,          #Directory
+		$OneIGexeName,	      #exeName
+		$OneIGPoints	      #Value
+		);
 	}
 	print "(overall)";
     }
@@ -3370,9 +3409,9 @@ while($IGGO)
 	}
 	elsif($IGDONE==0)
 	{
-	    print "Student program died while tester was trying to write\n";
-	    $StudentReportBrief .= "\nProgram died.......\n";
-	    $StudentReportLong .= "\nProgram died.......\n";
+	    print "Student program crashed while tester was trying to write\n";
+	    $StudentReportBrief .= "\nProgram crashed.......\n";
+	    $StudentReportLong .= "\nProgram crashed.......\n";
 	}
     }##END OF if($TAinput){}
 } ##END OF while($IGGO)

@@ -21,18 +21,3 @@ Functional test results up to 100 points.
 Begin reports of make-collage tests..
 
 BEGIN NEW TEST REPORT---------
-Name of test: t01, see
-   http://www.cs.albany.edu/~sdc/CSI310/Spr12/Proj/Proj5/make-collage/t01.txt
-
-Result Accepted, Good Job.
-
-Test t01 rated 100% for 20 out of 20 points
-
-
-Score before deducting points for lateness: 15
-Your project was turned in approximately 0 days late.
-Grade multiplied by approximately 1
-
-
-Total score for this project: 15 points.
-

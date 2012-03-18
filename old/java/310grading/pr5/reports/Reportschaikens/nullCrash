@@ -1,6 +1,6 @@
 Subject: CSI310 Grading Report
 
-User Id:student,  Project Name:  pr3
+User Id:nullCrash,  Project Name:  pr3
 
 This is the automatically generated grading output
 
@@ -23,16 +23,20 @@ Begin reports of make-collage tests..
 BEGIN NEW TEST REPORT---------
 Name of test: t01, see
    http://www.cs.albany.edu/~sdc/CSI310/Spr12/Proj/Proj5/make-collage/t01.txt
+Input 4 pictures and see the linear collage.
+-------------Results-----------------------------:
+Out->Exception in thread "main" java.lang.NullPointerException
+Out->	at PictureList.main(PictureList.java:489)
+Out->
+...Program failed this test........
 
-Result Accepted, Good Job.
-
-Test t01 rated 100% for 20 out of 20 points
+Test t01 rated 0% for 0 out of 20 points
 
 
-Score before deducting points for lateness: 15
+Score before deducting points for lateness: -4.9
 Your project was turned in approximately 0 days late.
 Grade multiplied by approximately 1
 
 
-Total score for this project: 15 points.
+Total score for this project: -4.9 points.
 
