@@ -18,21 +18,25 @@ Penalty for unwanted files : -5
 Functional test results up to 100 points.
 
 
-Begin reports of make-collage tests..
+Interactive grading of phase-one cannot be done.
+
+
+
+Begin reports of phase-two tests..
 
 BEGIN NEW TEST REPORT---------
-Name of test: t01, see
-   http://www.cs.albany.edu/~sdc/CSI310/Spr12/Proj/Proj5/make-collage/t01.txt
+Name of test: t12, see
+   http://www.cs.albany.edu/~sdc/CSI310/Spr12/Proj/Proj5/phase-two/t12.txt
 
 Result Accepted, Good Job.
 
-Test t01 rated 100% for 20 out of 20 points
+Test t12 rated 100% for 25 out of 25 points
 
 
-Score before deducting points for lateness: 15
+Score before deducting points for lateness: 20
 Your project was turned in approximately 0 days late.
 Grade multiplied by approximately 1
 
 
-Total score for this project: 15 points.
+Total score for this project: 20 points.
 

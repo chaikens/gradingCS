@@ -18,19 +18,8 @@ Penalty for unwanted files : -5
 Functional test results up to 100 points.
 
 
-Begin reports of make-collage tests..
+Interactive grading of make-collage cannot be done.
 
-BEGIN NEW TEST REPORT---------
-Name of test: t01, see
-   http://www.cs.albany.edu/~sdc/CSI310/Spr12/Proj/Proj5/make-collage/t01.txt
-Input 4 pictures and see the linear collage.
--------------Results-----------------------------:
-Out->Exception in thread "main" java.lang.NullPointerException
-Out->	at PictureList.main(PictureList.java:489)
-Out->
-...Program failed this test........
-
-Test t01 rated 0% for 0 out of 20 points
 
 
 Score before deducting points for lateness: -4.9
