@@ -1,0 +1,46 @@
+Subject: CSI201 Grading Report
+
+User Id:student,  Project Name:  pr2
+
+This is the automatically generated grading output
+
+If you have any questions about your grade on this program,
+please contact your TA sdctst. You have 2 weeks
+from the receipt of this message to request a grade change,
+after which this becomes your permanent score for this assignment.
+
+
+The following files were not to be submitted:
+Picture.class
+
+Penalty for unwanted files : -5
+Functional test results up to 100 points.
+
+
+Begin reports of whole-vignette tests..
+
+BEGIN NEW TEST REPORT---------
+Name of test: whole, see
+   http://www.cs.albany.edu/~sdc/CSI201/Spr12/Proj/Proj2/whole-vignette/whole.txt
+
+Result Accepted, Good Job.
+Test whole rated 100% for 80 out of 80 points
+
+
+Begin reports of rect-vignette tests..
+
+BEGIN NEW TEST REPORT---------
+Name of test: rect, see
+   http://www.cs.albany.edu/~sdc/CSI201/Spr12/Proj/Proj2/rect-vignette/rect.txt
+
+Result Accepted, Good Job.
+Test rect rated 100% for 20 out of 20 points
+
+
+Score before deducting points for lateness: 95
+Your project was turned in approximately 0 days late.
+Grade multiplied by approximately 1
+
+
+Total score for this project: 95 points.
+

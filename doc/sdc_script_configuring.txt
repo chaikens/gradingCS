@@ -1,0 +1,85 @@
+Make the GRADING DIRECTORY:
+Put it under ~/private/"$Year".grading
+and name it with the project name.  For example,
+~/private/Spr07grading/pr1pt2
+Here pr1pt2 is the PROJECT NAME.
+
+Copy old or sample versions of the following files into the GRADING DIRECTORY:
+grade_these.pl Selects submissions and runs scriptIG.pl on them one by one.
+scriptIG.pl    Unpacks and performs the grading on one submission
+
+Make sure grade_these.pl and scriptIG.pl are "executable"
+using chmod 700 *.pl if necessary.
+
+Configure grade_these.pl
+Set $NAM_project to the PROJECT NAME
+Set $Year to the say Spr07 (a name that distinguishes semesters)
+
+Configure scriptIG.pl
+Set $ProjectName to the PROJECT NAME
+
+Review/edit $NonFunGradInstructions 
+(for grading non-functional or process requirements)
+
+Review/set point amounts for various non-functional requirements
+If the point amount is 0, the TA will not be asked to grade the requirement.
+
+Review $valueInteractiveTests.  For CSI310, it is normally 70.
+
+Set Project due time and late config:
+First, set the date and time in the comment.
+Set $DUEhour, $DUEmon (NOTE COMMENT: January is month 0)
+    $DUEmday, $DUEyear (NOTE COMMENT: 2007 is 007)
+
+Set $DUEmaxdayslate
+Set $DUEDaysPer100PercentOff (NOTE COMMENT: 1/this value is daily penalty rate)
+
+Set Project Directory Information
+$ProjGradingDir to the GRADING DIRECTORY, specify pathname under
+$ClassAcctHomeDir
+
+Make the GRADING CASES DIRECTORY and set its path in
+$TestCaseDir
+
+Set @PartsIGList (normally one entry, the project name)
+Set @PartsIGexeName (normally one entry, for the executable
+name that the project assignment specified.)
+Check @PartsIGPoints (normally one entry, 70)
+Check @PartsIGTestCaseDir
+
+
+
+name that the project assignment specified.)
+Check @PartsIGPoints (normally one entry, 70)
+Check @PartsIGTestCaseDir
+
+For multiple parts, make these lists:
+@PartsIGList : a list names of parts
+@PartsIGexeName :corresponding names of the executable file
+@PartsIGPoints : points for each part 
+@PartsIGTestCasesDir : Directories containing test cases (t01.txt, etc)
+
+-----------------------------------------------------
+Each test case must have a file named with the 
+pattern *.txt in the GRADING CASES DIRECTORY.
+That file MUST end with a newline.
+We usually name the tests t01, t02, t10, t20, t21, etc.
+
+The contents of the .txt file will be presented
+to the grader.  The contents of the .in file will
+be available to input to the program under test
+when the grader commands.  The grader can supply 
+other input by typing it.
+
+If the grader doesn't fully accept the test,
+a copy of the .txt file plus the input
+and output to the program under test are inserted
+in the report to the student.
+
+When there is only one entry in the 
+@PartsIGList, @PartsIGexeName, and
+@PartsIGPoints lists, then all tests will count
+equally.  (So the number of points for
+each will be the only number in
+@PartsIGPoints divided by the number of tests.
+
