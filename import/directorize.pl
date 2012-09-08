@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#! /usr/bin/perl -w
 
 use strict;
 
@@ -69,7 +69,7 @@ for my $file(@files){
       mkdir "$dir/$dirName";
   }
 
-  `mv $dir/LEFTOVERS/$file $dirName/$fileName`;
+  `mv $dir/LEFTOVERS/$file $dir/$dirName/$fileName`;
   die "Can't mv $dir/LEFTOVERS/$file $dirName/$fileName" unless $? == 0;
 
   print "\b\b\b\b\b"; #Enough for myriads of files

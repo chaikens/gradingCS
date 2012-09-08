@@ -1,0 +1,9 @@
+We run:
+Picture p = new Picture( our test file name );
+p.vignette(10,10, 300, 200, java.awt.Color.green);
+p.show();
+(1) Black in the middle.
+(2) White at each of 4 corners.
+(3) Grey gradations in between.
+TA: Type any letter and ENTER after seeing whether or not
+a picture is displayed.  Then enter rating.

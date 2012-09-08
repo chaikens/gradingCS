@@ -1,0 +1,3 @@
+Test :sort
+Test should read and print an unsorted list, call :sort command
+then a sorted list should be displayed.

@@ -1,0 +1,4 @@
+Test :locate, :removeLine
+first :locate should give error, second :locate should return
+line number three and finally :removeLine should remove line
+number 3.  :display should varify that line 3 was removed.

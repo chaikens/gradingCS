@@ -1,0 +1,4 @@
+Open a good file, read line-by-line,
+(0.3) 3 (or 6) non-empty lines inserted
+(0.3) ignore empty lines
+(0.4) time report

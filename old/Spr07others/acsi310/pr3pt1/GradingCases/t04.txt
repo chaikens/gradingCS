@@ -1,0 +1,2 @@
+Test :isEmpty
+Should print true since no file was passed.
