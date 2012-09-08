@@ -1,3 +1,3 @@
 #Properties for the Simple Picture class
-#Sun Mar 18 17:27:01 EDT 2012
-mediaDirectory=/home/seth/310/CSI310Spr11/Albany-media/
+#Sun Mar 25 09:35:28 EDT 2012
+mediaDirectory=/sda15/GIT/gradingCS/old/java/310grading/pr5/tests/
