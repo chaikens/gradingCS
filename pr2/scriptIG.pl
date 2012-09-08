@@ -383,9 +383,9 @@ $TestCompileDir,
    then fg
 See if you can rename and/or change arguments of these methods in
 Picture.java so you can test the submitted work:
-vignette( )  //Penalize 20 points
+vignette( )  //Penalize -10 points (out of 80)
 vignette(int x1, int y1, int x2, int y2, Color color)
-//Penalize 5 or 10 points if it works, to deduct from 
+//Penalize -3 out of 10 or 20 points if it works, to deduct from 
 //the extra credit points.
 Compile again to get a Picture.class file
 Then type y if you succeeded and n if not.\n";
