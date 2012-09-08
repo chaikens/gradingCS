@@ -5,7 +5,9 @@ umask 007
 killall -9 scriptIG.pl
 
 
-#export TANAME=chaikens
+                                                                                
+INPUTRC=$SCRIPTS/bash-readline-settings                                         
+                                                                                
 
 if [ ! -e `pwd`/submissions.graded/$USER ]
 then
@@ -21,6 +23,13 @@ PATH=/home/faculty1/sdc/201Spr12Grading/drjava:$PATH
 
 ls `pwd`/submissions
 
+set mark-directories off
+
+
+#bash-readline-settings contains                                                
+#set mark-directories off                                                       
+#we can't just cat a line into the scripts directory                            
+#because TAs might not have write access.                                       
 read -p "Pick a submission:" subName
 
 

@@ -223,7 +223,7 @@ sub setVersionPoints( $ )
 # On time Project Deadline  03/03/12 23:59 (11:59PM)
 $DUEhour = 23;
 $DUEmin  = 59;
-$DUEmon  = 3;         # Months past January (0-11) so February = 1
+$DUEmon  = 3;        
 $DUEmday = 03;
 $DUEyear = 112;        # Years past 1900
 $DUEtime = SetDueTime($DUEyear,$DUEmon,$DUEmday,$DUEhour,$DUEmin);  # Secs. past epoch
@@ -612,6 +612,15 @@ sub gradeOneStudent(@)
     if($GradersBuildCommand ne "")
     {
 	$BuildSuccessful = tryBuildWithCommand();
+	if($BuildSuccessful)
+	{
+	    print "TA:success building with ";
+	}
+	else
+	{
+	    print "TA:FAILURE building with ";
+	}
+	print "\n$GradersBuildCommand\n";
     }
 
 

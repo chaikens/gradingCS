@@ -3,11 +3,42 @@
 package SubmissionAdapter;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT = qw(submissionTime getUserId loadTestCompileDir);
+@EXPORT = qw(getOtherSubmissions
+ submissionTime getUserId loadTestCompileDir);
 
+
+use Cwd; #for cwd() function
 use Time::Local;
+use File::Glob ':glob';
 
 my $verbose = 0;
+
+sub getOtherSubmissions($$)
+{
+    my $containingDir = $_[0];
+    if( ! $containingDir )
+    {
+	print "getOtherSubmissions called without a containing dir\n";
+	return "";
+    }
+
+    my $submission = $_[1];
+    my $userId = getUserId($submission);
+    my $timeString = $submission;
+    $timeString =~ s/^.+\.//; #remove everything at first . and before.
+    my $saveCwd = cwd();
+    chdir($containingDir);
+    my $others = "";
+    foreach $name (<$userId.*>)
+    {
+	if( $name !~ /\Q$timeString/ )
+	{
+	    $others = "$others $name";
+	}
+    }
+    chdir($saveCwd);
+    return $others;
+}
 
 sub submissionTime($)
 {

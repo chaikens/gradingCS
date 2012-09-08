@@ -67,12 +67,14 @@ sub SetDueTime($$$$$);
 
 ########## Get TA Name from environment to name temp dir, reports file, etc
 #$TAUserName = "";     #set to "" when no TANAME is required.
-$TAUserName = $ENV{"TANAME"};
+#$TAUserName = $ENV{"TANAME"};
+$TAUserName = $ENV{"USER"};
 if( not defined $TAUserName  )
 {
-    print "Dear TA: You must put the enviroment variable TANAME set to your User Name\n",
-    "in the environment before running this script.  Exit now and do it:\n",
-    "setenv TANAME <your username in the ecl>\n";
+    print "Something's wrong: USER isn't defined in your environment\n";
+    #print "Dear TA: You must put the enviroment variable TANAME set to your User Name\n",
+    #"in the environment before running this script.  Exit now and do it:\n",
+    #"setenv TANAME <your username in the ecl>\n";
     die ;
 }
 
@@ -87,7 +89,7 @@ $Course = "CSI310";   #Course name/nr for mail subject line.
 
 
 #For submission directory, grading dir, insertion in the grade reports, etc
-$ProjectName        = "pr3";
+$ProjectName        = "pr5";
 
 
 
@@ -166,11 +168,6 @@ $PointBreakdownMessage = "";
 #Up to 15 points from your paper design draft will be added by Prof. Chaiken.
 #Software Process/Documentation Requirements: up to 15 points, 5 extra for test cases.
 #";
-
-$ManualBuildFixMessage = "no manual build fix message";
-#"TA: edit in #include <algorithm> if compile fails because of
-#undeclared swap().  Penalize 10 points if that fixes it."
-#;
 
 
 
@@ -359,44 +356,68 @@ $infsuffix = "code";
 # All project configuration variable above, only code below
 #############################################################################
 
-$GradeReportsDir = "$ProjGradingDir/reports/Reports$TAUserName";
+$AllGradeReports = "$ProjGradingDir/reports";
+
+$GradeReportsDir = "$AllGradeReports/$TAUserName";
 # directory where the reports to be mailed to the students
 # will appear.  This should be a different directory for each project.  
 # The name of the file be the UserId of the student
 # The perl file handle for the current GradeReport file will be   GROUT
 
-$GradeSummaryFile = "$ProjGradingDir/reports/summary$TAUserName";
+$GradeSummaryFile = "$AllGradeReports/$TAUserName.summary";
 # The file where a records of each student's score before late check & 
 #   final score is appended.
 # FORMAT: <UserId> <Grade before Late Penalties> <Final Score>
 #
 # The perl file handle for the GradeSummaryFile will be  SUMOUT
-open(SUMOUT,">>$GradeSummaryFile") || die("Can't open $GradeSummaryFile\n");
+open(SUMOUT, ">>$GradeSummaryFile") 
+    || die("Can't open $GradeSummaryFile\n");
+chmod 0660, $GradeSummaryFile;
 
-$NoReportFile = "$ProjGradingDir/reports/no_report$TAUserName";
+$NoReportFile = "$AllGradeReports/$TAUserName.no_report";
 # The file of student id's without a $ReportLikeFile, followed by the TA rating
 # The TA rating is if the TA finds a valid report under different filename
 # FORMAT: <UserId> <TA Final Rating for any report like file>
 #
 # The perl file handle for the NoReportFile will be      NOREPOUT
-open(NOREPOUT,">>$NoReportFile") || die("Can't open $NoReportFile\n");
+open(NOREPOUT, ">>$NoReportFile")
+    || die "Can't open $NoReportFile\n";
+chmod 0660, $NoReportFile;
 
-#$NoIntegrityFile="$ProjGradingDir/no_integrity$TAUserName";
+#$NoIntegrityFile="$AllGradeReports/$TAUserName.no_integrity";
 # The file of student id's without the integrity statement
 # FORMAT: <UserId> [ "No Integrity Statement" | "Accepted Last Year's Spec" ]
 # 
 # The perl file handle for the NoIntegrityFile will be   NOINTEGOUT
-#open(NOINTEGOUT,">>$NoIntegrityFile") || die("Can't open $NoIntegrityFile\n");
+#open(NOINTEGOUT,">>$NoIntegrityFile") 
+#  || die("Can't open $NoIntegrityFile\n");
+#chmod 0660, $NoIntegrityFile;
 
 #####################################################################
 
-$TestCompileDir = "/tmp/310TA$TAUserName";
+$TestCompileDir = "/tmp/$TAUserName.grading310";
 # here is where the student submission will 
 #  be unpacked
 #  be compiled/linked
 #  have its executable for testing if same as below
 #  Might be changed by the script
 ############################################################################
+#
+#
+#
+$ManualBuildFixMessage = 
+"TA: If you don't already have DrJava (or other) open on 
+$TestCompileDir, 
+   type C-Z here,
+   then ./drjava [KEEP drjava open to SAVE TIME!]
+   then fg
+See if you can fix the submission enough to grade it.
+Compile again.
+Then type y if you succeeded and n if not.
+You will specify a penalty later.\n";
+
+
+
 
 
 $MakeMessageFile = "$TestCompileDir/gmake.output";
@@ -557,12 +578,13 @@ sub gradeOneStudent(@)
     scoreInit( $UserId );
     unless( -d $GradeReportsDir )
     {
-	mkdir($GradeReportsDir,0700) || die("Can't mkdir $GradeReportsDir\n");
+	mkdir($GradeReportsDir,0770) || die("Can't mkdir $GradeReportsDir\n");
 	# mode 0700 begins with 0 to tell perl it is octal
     }
     backupFile( "$GradeReportsDir/$UserId" );
     open(GROUT,">$GradeReportsDir/$UserId") || 
 	die("Can't open $GradeReportsDir/$UserId\n");
+    chmod 0660, "$GradeReportsDir/$UserId";
     writeGROUTHeading();
     $SubmissionPathName = $_[0];
     if($ManualFlag )
@@ -688,20 +710,20 @@ sub gradeOneStudent(@)
 	    for($i=0; $i<@PartsIGList; $i++)
 	    {
 		if(
-		    askYes(
+		   askYes(
 "\n\nCan you grade $PartsIGList[$i] interactively?") )
 		{
 		    print GROUT
-			"\n\nBegin reports of $PartsIGList[$i] tests..\n";
+"\n\nBegin reports of $PartsIGList[$i] tests..\n";
 		    runInteractiveTestCases(
 			$PartsIGTestCaseDir[$i],#Directory
 			$PartsIGexeName[$i],	#exeName
 			$PartsIGPoints[$i]	#Value
-			);
+						);
 		}
 		else
 		{
-			print GROUT 
+		    print GROUT 
 "\n\nInteractive grading of $PartsIGList[$i] cannot be done.\n\n";
 		}
 		print "($PartsIGList[$i])";
@@ -713,12 +735,12 @@ sub gradeOneStudent(@)
 	if($OneIGTestCaseDir)
 	{
 	    print GROUT
-		"\n\nBegin reports of tests..\n";
+"\n\nBegin reports of tests..\n";
 	    runInteractiveTestCases(
-		$OneIGTestCaseDir,          #Directory
-		$OneIGexeName,	      #exeName
-		$OneIGPoints	      #Value
-		);
+		   $OneIGTestCaseDir,          #Directory
+		   $OneIGexeName,	      #exeName
+		    $OneIGPoints	      #Value
+					);
 	}
 	print "(overall)";
     }
@@ -1231,7 +1253,7 @@ sub tryBuildScript
 
     if( (not -d $TestCWD) and ($TestCompileDir ne $TestCWD ))
     {
-	mkdir($TestCWD,0700) || die( "Cannot mkdir $TestCompileDir\n" );
+	mkdir($TestCWD,0770) || die( "Cannot mkdir $TestCompileDir\n" );
 	# mode 0700 begins with 0 to tell perl it is in octal
     }	
 
@@ -2091,7 +2113,9 @@ print
 			print GROUT "--- Your program's output(truncated):\n";
 			
 			# Put student output into his/her report
-			open (USEROUT, "<$truncName");
+			open (USEROUT, "<$truncName")
+			    || die "Can't open $truncName.\n";
+			chmod 0660, $truncName;
 			while ($line = <USEROUT>) 
 			{
 			    print  GROUT "   $line";
@@ -2131,7 +2155,9 @@ print
 			print GROUT "--- Your program's output:\n";
 			
 			# Show student output from the test case
-			open (USEROUT, "<$resultFileName_stdout");
+			open (USEROUT, "<$resultFileName_stdout")
+			    || die "Can't open $resultFileName_stdout\n";
+			chmod 0660, $resultFileName_stdout;
 			while ($user_line = <USEROUT>) 
 			{
 			    print  GROUT "   $user_line";

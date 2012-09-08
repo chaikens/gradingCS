@@ -3,11 +3,48 @@
 package JavaAnalyzers;
 require Exporter;
 @ISA = qw(Exporter);
-@EXPORT = qw(findMainClassInteractively);
+@EXPORT = qw(findMainClassInteractively doesSignatureExistInClass);
 
 use Cwd ('chdir', 'cwd') ;
 
 my $verbose = 0;
+
+
+sub doesSignatureExistInClass($$$)
+{
+    my $dir = $_[0];
+    my $signature = $_[1];
+    my $className = $_[2];
+
+    my $saveDir = cwd();
+
+    if( ! defined $dir || ! defined $signature || ! defined $className)
+    {
+	print "findMainClassInteractively called with undefined arg.\n";
+	return "";
+    }
+    if ( ! opendir DIR, $dir )
+    {
+	print "doesSignatureExistInClass couldn't open dir $dir\n";
+	return "";
+    }
+    
+    if (! -e "$dir/$className.class")
+    {
+	print "Class $className.class doesn't exist in $dir.\n";
+	return "";
+    }
+
+    cwd($dir);
+    my $jps = `javap $className`;
+    cwd($saveDir);
+    if(!($jps =~ /\Q$signature/s))  
+    {
+	print "$className.java compiled but didn't have 
+  $signature\n";
+	return "";}
+    else { return "1";}
+}
 
 sub findMainClassInteractively($)
 {
