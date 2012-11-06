@@ -1,0 +1,5 @@
+Test :retrieve, :retrieveCur
+First retrieve the fourth line which should set the cursor
+to the 3rd line.  RetrieveCur should retrieve the third line.
+The second retrieve should give an error and leave 
+the cursor unchanged.

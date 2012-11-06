@@ -1,0 +1,10 @@
+We run:
+Picture p = new Picture( our test file name );
+p.vignette(); p.show();
+
+(1) Black in the middle. (0.33)
+(2) White at each of 4 corners. (0.33)
+(3) Grey gradations in between. (0.34)
+
+TA: To work cleanly, TYPE ANY LETTER and enter after looking
+for or at the picture.  Then enter rating.

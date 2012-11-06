@@ -1,0 +1,17 @@
+Y Y Y Y N
+
+MF
+MF
+MB
+MB
+XX
+Input pictures 1,2,3,4
+( ) See cursor on picture 1.
+MF
+( ) See cursor on picture 2.
+MF
+( ) See cursor on picture 3.
+MB
+( ) See cursor on picture 2.
+MB
+( ) See cursor on picture 1.

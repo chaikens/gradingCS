@@ -1,0 +1,2 @@
+Test :display, :getLength, :null, :quit
+At least :getLength and :null must print time report

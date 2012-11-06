@@ -1,0 +1,4 @@
+Test :insert, :replace
+Test insert two line and then replaces the second
+with a "NEW SECOND LINE".
+ 

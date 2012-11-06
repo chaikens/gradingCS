@@ -1,0 +1,2 @@
+Test :retrieveLast
+Should print the "Last Line"
