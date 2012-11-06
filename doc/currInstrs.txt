@@ -1,0 +1,24 @@
+Log in.
+
+cd ~sdc/201SprGrading
+cd pr2  (or other project)
+
+./run.sh
+
+Pick a submission from your list by typing the first few characters
+of the NetId and tab.  You can then see if there were two or more
+submissions from the same NetId. The policy is to grade the latest one
+first.
+
+The 201 classes...
+
+The submissions are copied and built in /tmp/$USERNAME.grading201
+
+what if something goes wrong..
+Type n at the end when is asks to move..
+Redo it.
+(The previous report will be renamed with .P)
+
+Scores are added to the end of the summary.$USERNAME file.
+
+

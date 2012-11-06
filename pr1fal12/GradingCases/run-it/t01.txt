@@ -1,0 +1,18 @@
+We run your program and see what it does. Points:
+If it doesn't compile, meet with TA and redo.
+6 Submitting a .java file, 4 for something
+6 3 separate lines
+6 name
+6 full name
+6 NetID
+6 iClickerID
+6 make a World
+6 make a Turtle
+7 pen lifted between letters
+7 first letter or digit not B or E from your iClicker ID
+7 second letter or digit not B or E from your iClicker ID
+7 first recognizable not B or E
+7 second recognizable not B or E
+7 nice indentation
+
+10 Doing it all without moveTo.

@@ -1,0 +1,224 @@
+
+
+
+
+(1) Log in.
+
+(2) command: cd ~sdc/201SprGrading
+(3) command: cd pr2  (or other project)
+
+To grade one submission:
+
+(1) command: ./run.sh
+(2) You will see 
+
+Pick a submission from your list by typing the first few characters
+of the NetId and tab.  You can then see if there were two or more
+submissions from the same NetId. The policy is to grade the latest one
+first.
+
+The 201 classes...
+
+The submissions are copied and built in /tmp/$USERNAME.grading201
+
+what if something goes wrong..
+Type n at the end when is asks to move..
+Redo it.
+(The previous report will be renamed with .P)
+
+Scores are added to the end of the summary.$USERNAME file.
+
+
+Before beginning to grade each project, examine the test cases, explanation
+and grading policy for each, and sample run of the test case on the reference
+implementation.
+
+These files are found under say
+ ~acsi310/Proj1/GradingCases/TestDeck , TestPile , and patience310
+The test case input files are named t01.in, t02.in, etc
+The corresponding explantion/policy files are named t01.txt, t02.txt, etc.
+The sample runs are named t01.script,  t02.script, etc.
+
+If 2 TA's are working on grading the same project, they should work
+together for a while so they could discuss and agree on a common
+partial credit policy for situations that are not covered in the policies.
+When you are evaluating the test cases and policy, you may improve
+the test cases/policies if you wish, as long as EVERYONE in the class
+gets graded with the same test cases and policies!
+
+If the interactive grading is confusing for some student programs,
+you could just evaluate the issues covered by a test case
+on a manual run of the submitted program.
+
+(1) Obtain 2 shell windows connected to the same ITSUNIX host.
+    (For example, command ssh -l acsi310 unix1.its.albany.edu twice.
+     Note itsunix.albany.edu resolves to different hosts at different 
+     times for the purpose of load balancing)
+    (If you are using an Xterminal like those in HU-25, you can get
+     additional shell windows to the SAME host by giving the command:
+       xterm &
+     in the first shell window)
+
+    One will be for running the grading script,
+     and the other will be for building/examining/moving submitted files.
+
+(2) In the window for running the grading script, (under the bash shell)
+     export TANAME=your_ITS_login_name
+     (This will be included in some emailed grade reports as the 
+      contact person for grade questions or appeals.)
+     cd ~/private/Spr04grading/Proj1 (or other project or lab name)
+
+(3)  In the grading script window, use grade_these.pl to choose which
+     submissions to grade:
+     ./grade_these.pl <one userid viewed from the project's submit directory>
+     ./grade_these.pl --all
+     ./grade_these.pl --from userid [userid]
+     Follow the directions of the prompts!
+
+     To observe the initial submissions, look in BOTH directories:
+       ~/submit/Proj1 AND ~/submit/Proj1-extra (or other project or lab name)
+     NEVER delete/move/touch or otherwise modify submission files!
+
+     Grade any submissions in the -extra directory separately.  The
+     grading policy is to grant additional points to the original grade
+     based on improvements minus a penalty for the lateness of the
+     later (-extra) submission.
+     
+     To grade a submission in a different directory, such as Proj1-extra,
+     do not use grade_these.pl.  Run,
+     cd ~/private/Spr04grading/Proj1 (or other project or lab name)
+     scriptIG.pl <Pathname of submission file> 
+       for example
+     scriptIG.pl ~/submit/Proj1-extra/mt6588.Z 
+
+     If multiple TAs are grading one project, they can choose different
+     userids from the submission directory at which the begin.  The 
+     userids are chosen by the script in lexicographic, UNIX default
+     file listing order.
+
+     My current policy for -extra submissions is to grade both them
+     and the original submission.  I will get summary information
+     for both from the summary<taname> file, and will reconcile 
+     the score to count for the project.  It will be roughly the
+     original score plus additional points from -extra, where the
+     latter are penalized do to lateness of the latter.
+     Notice the last report generated is named <userid>, the
+     report generated before is named <laterreportname>.P, and
+     recursively.
+
+(4) When a new submission is unpacked and you are prompted to examine
+    or build it, use the other window:
+     cd /tmp/310TAyour_ITS_login_name
+    You will find the submitted directory TOGETHER WITH _TESTING_
+
+(5) The (scriptIG.pl) script tries to run a build.sh script and 
+    copy specified executable program files to the _TESTING_ directory.
+
+    If this fails, you will have to examine the submitted files
+    to see why the automatic build failed.  You must then
+    try to build the programs manually.
+
+    After building the executable programs, you must make
+    sure they are copied to the _TESTING_ directory and 
+    possibly renamed to the name the script expects.
+    Those names (like TestDeck, TestPile, patience310) are
+    specified to the students in the project assignments.
+
+    When you build manually, observe how well the student followed
+    our project/lab and policy handouts.  You will be prompted to
+    specify a penalty for failing to follow the directions.
+    Note that the CSI310 directions specify 
+    (a) The submission must be in one top level directory.
+    (b) The name of that directory is NOT specified; so if
+        the build fails because the name the student gave is different
+        from what I expected, there should be no penalty.
+
+(6) When your are prompted to "grade" something with [0,1]:
+    you must specify a number in decimal within that range...
+    Type 1 for 100%, 0.75 for 75%, 0 for a zero.
+
+    Do not give any "charity" partial credit! Ask yourself
+    How much and how well did the student actually do the requested
+    task?  If he/she didn't do it at all, assign a zero even if
+    something different was done!
+
+    On the other hand, failure of some features may prevent our
+    test cases from testing other features.  If this happens,
+    review the goal of the test from the t??.txt file and 
+    try to test that goal manually.  Then assign a partial
+    credit grade based on the t??.txt policy and your test results.
+
+    When you are in the "training" phase of grading a project, 
+    please think about how the test cases and policies can be
+    improved in the light of the errors you find some students make.
+    At first, propose and discuss them with the professor; eventually,
+    you will have to make up and/or revise test cases yourself.
+
+    After and during each grading run (i.e., run of scriptIG.pl)
+    the test report file will be found under Reports<your login name>
+    with the login name of the student.  Whenever a new report file
+    is started for the same student, all the old ones are renamed
+    by appending another ".P"  Eventually, the reports named 
+    without any ".P" will be emailed to the students.
+
+    A record of each grading run, before and after lateness penalties, is
+    appended to the file Summary<your login name>
+    I will use the Summary files to obtain grades to record.
+
+(7) To examine the revision histories, run in the other window:
+    rlog * | less
+
+    Don't be very picky about content of the revision history though.
+    For proj1, give 50% if only one revision was recorded for each file.
+    We will be more picky for future projects.
+
+(8) Remember that my policy is to grade for pre/post condition
+    and invariant comment documention only.  Ignore any other documentation,
+    except it may help you to determine what functionality was
+    implemented when you will grade functionality.
+
+(9) Interactive grading explantion of prompts:
+
+    Please note that if you assign any test case grade below 100%,
+    the instructions you saw plus the entire record of input
+    and output with the student program for that case will be
+    copied into the grade report.  Therefore, you do not have 
+    to write explanations for such decisions except if 
+    they are not obvious.
+
+TA1:(CA:accept)(CF:reject)(CG:par.cred.)(CX:from in.file)(CB:?)more input:
+TA2:(cA:ok)(CF:bad)(CN:wait output)(CG:partial.cr)(CX:in.file)(CB?)more input:
+    Accept and grant full credit for current test: Control-a <enter>
+    Reject with 0 credit for current test: Control-f <enter>
+    Let program compute longer before giving up waiting for output:
+         Control-n <enter>
+    Grant partial credit for current test: Control-g <enter> 
+         Then respond to prompt.
+    "Extract" to obtain the next input line from the test case t??.in file:
+         Control-x <enter>
+         (You will see what this input is.)
+    Look "Back" at the case explantion and grading policy instructions
+         in hte t??.txt file: Control-b <enter>
+    To supply your own line of input to the students program:
+         Just type it and press enter.
+    To abort the current test so you can restart it:
+        Control-g <enter> No <enter>
+
+Please rate[0,1] or No:
+    To specify a grade for the current test, type the number.
+    To restart that test again, type No <enter>
+
+Receiving Student Program Output TIMED OUT
+    means either the Student Program is waiting for more input,
+    it is in an infinite or very long loop, or has exited.
+    If you press <enter> and get the message:
+Got a SIGPIPE
+     it means the Student Program exited.
+
+Argument "Got a S1" isn't numeric in numeric eq (==) at 
+/home1/c/a/acsi310/private/Spr04grading/Proj1/scriptIG.pl line 2294, <STDIN> line 25.
+Bad number input.  Try again.
+[0,1] or No:
+
+    Just try again to type a number or the letters "N", "o", <enter>
+
