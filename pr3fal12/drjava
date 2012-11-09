@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PATH=/home/faculty1/sdc/201Spr12Grading/jdk/jdk1.7.0_03/bin:$PATH
+exec java -jar /home/faculty1/sdc/201Spr12Grading/drjava/drjava-beta-20110822-r5448.jar &
+

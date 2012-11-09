@@ -1,0 +1,17 @@
+We run:
+Picture p = new Picture( our test file name );
+p.scribble(300,300,1.0 ); p.show();
+
+-10/80=-.125 (or 0.875) 
+if it's white in the middle and orig. colors at the corners.
+
+-20/80=-.250 (or 0.75)
+Uniform or almost uniform grey, or a weird color gradation.
+
+-40/80=-.5 (or 0.5)
+all black or all white.
+
+TA: To work cleanly, TYPE ANY LETTER and enter after looking
+for or at the picture.  Then enter rating.
+
+

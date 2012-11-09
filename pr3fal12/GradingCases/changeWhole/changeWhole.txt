@@ -1,0 +1,11 @@
+We ran:
+Picture p = new Picture( our test file name );
+p.changeWhole( 0.5 );
+90 points: ???
+  (TA: Rate this test 0.5)
+100 points: vignette within the circle.
+  (TA: Rate this test 1.0)
+
+TA: To work cleanly TYPE ANY LETTER and enter after looking
+for or at the picture.  Then enter the rating.
+
