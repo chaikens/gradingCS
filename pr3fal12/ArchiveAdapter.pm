@@ -88,10 +88,14 @@ sub returnDirectoryToGradeFromSubmission($)
     if( $nArchives == 1 )
     {
 	expandAnArchive($ArchiveList[0]);
-	print `find `;
-	print "\n\nEnter the Version Dir. to grade:\n";
+
+	use Term::ReadLine;
+	my $term = Term::ReadLine->new('Revision Directory Reader');
+	my $prompt = "Pick revision dir(TAB to see options): ";
+
 	my $dirFromTA;
-	chop($dirFromTA=<STDIN>);
+	$dirFromTA = $term->readline($prompt);
+
 	chdir($dirFromTA);
 	return cwd();
     }
