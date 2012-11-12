@@ -28,8 +28,10 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	p2.hide();
 	if(saveImagesPrefix != null)
 	    {
-		p1.write(saveImagesPrefix + "whole" + amt1 + ".bmp");
-		p2.write(saveImagesPrefix + "whole" + amt2 + ".bmp");
+		String Samt1 = (""+amt1).replace(".","r");
+		String Samt2 = (""+amt2).replace(".","r");
+		p1.write(saveImagesPrefix + "whole" + Samt1 + ".bmp");
+		p2.write(saveImagesPrefix + "whole" + Samt2 + ".bmp");
 	    }
         return scin;
     }
@@ -152,6 +154,11 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	scribble(m, p, scale);
 
 	p.show();
+	if(saveImagesPrefix != null)
+	    {
+		String Sscale = (""+scale).replace(".","r");
+		p.write(saveImagesPrefix + "scribble" + Sscale + ".bmp");
+	    }
 	out.println("Enter another scale value, or 0 to stop:");
 	while( (scale = sc.nextDouble()) != 0.0)
 	    {
@@ -159,6 +166,11 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		p = new Picture( porig );
 		scribble(m, p, scale);
 		p.show();
+		if(saveImagesPrefix != null)
+		    {
+			String Sscale = (""+scale).replace(".","r");
+			p.write(saveImagesPrefix + "scribble" + Sscale + ".bmp");
+		    }
 		out.println("When scribble returns true, try to up the scale to make it return false!");
 		out.println("Enter another scale value, or 0 to stop:");
 	    }
