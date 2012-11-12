@@ -112,8 +112,8 @@ $filesWeBuild = "Picture.class";
 $DoNonFunReqCheck = 1;  # 1 to call NonFunReqCheck function to grade
                         # non-functional requirements
 
-$NonFunGradInstructions = 
-"Look at indentation\n";
+$NonFunGradInstructions = "";
+#"Look at indentation\n";
 
 
 #examples of non-functional requrements:
@@ -152,7 +152,7 @@ $RevisionLogRequired = 0;    # Self-documenting.
 $RevisionLogPoints = 0;      # Self-documenting, not necessarilly using RCS.
 $BuildScriptPoints = 0;      # Self-documenting. 
 $BuildScriptRequested = 0;
-$IndentationPoints = 7;      # Self-documenting.
+$IndentationPoints = 0;      # Self-documenting.
 $PedagogicalInstructionsFollowedPoints = 0;
 $FileSubmittedPoints = 0; 
 $InformativeCommentsPoints = 0;    # Self-documenting. 
@@ -281,16 +281,15 @@ $OneIGPoints = 0;
 
 $PenaltyPolicyFile = "$TestCaseDir/penalties";
 
-@PartsIGList = ("changeWhole", "scribble");
-@PartsIGexeName = ("$TestCaseDir/changeWhole/changeWholeUnitTest.sh", 
-                   "$TestCaseDir/scribble/scribbleUnitTest.sh");
+@PartsIGList = ("javaTests");
+@PartsIGexeName = ("$TestCaseDir/javaTests/javaTests.exe");
 @PartsIGTestCaseDir =
-    ("$TestCaseDir/changeWhole", "$TestCaseDir/scribble"  );
+    ("$TestCaseDir/javaTests");
 @PartsIGPenaltyPolicyFile =
     ("$TestCaseDir/penalties"   
      );
 
-@PartsIGPoints = (80, 20);
+@PartsIGPoints = (100);
 
 ################# Code Project Specific Special Pretests HERE.
 sub ProjectSpecificSpecialPretests()
@@ -557,6 +556,10 @@ sub gradeOneStudent(@)
 	}
     }
     scoreInit( $UserId );
+    
+    $ENV{IMAGES_PREFIX} = cwd()."/Images/$UserId";
+
+
     unless( -d $GradeReportsDir )
     {
 	mkdir($GradeReportsDir,0770) || die("Can't mkdir $GradeReportsDir\n");
