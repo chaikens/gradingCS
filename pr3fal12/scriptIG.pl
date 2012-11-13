@@ -557,7 +557,7 @@ sub gradeOneStudent(@)
     }
     scoreInit( $UserId );
     
-    $ENV{IMAGES_PREFIX} = cwd()."/Images/$UserId";
+    $ENV{IMAGES_PREFIX} = cwd()."/WorkSamples/$UserId";
 
 
     unless( -d $GradeReportsDir )

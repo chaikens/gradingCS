@@ -39,6 +39,12 @@ cd ..
 
 chgrp grade201 `pwd`/reports/${USER} `pwd`/reports/$USER.summary   `pwd`/reports/${USER}.no_report `pwd`/reports/${USER}/*
 
+if [ -d `pwd`/WorkSamples ]
+then
+find `pwd`/WorkSamples -exec chgrp grade201 '{}' \;
+fi
+
+
 echo "Did you grade $subName successfully?"
 read -p "Type y to MOVE submission to the DONE dir, n to keep it:" yIn
 if [ x$yIn = xy ]
