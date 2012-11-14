@@ -1037,7 +1037,7 @@ sub NonFunReqCheck( )  #---------------------------------------------------
 
     if( $FileToDiffFrom )
     {
-	system("diff $FileToDiffFrom $SubmittedFileToDiffTo");
+	system("diff -w $FileToDiffFrom $SubmittedFileToDiffTo");
     }
 
 
