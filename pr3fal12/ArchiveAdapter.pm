@@ -89,6 +89,8 @@ sub returnDirectoryToGradeFromSubmission($)
     {
 	expandAnArchive($ArchiveList[0]);
 
+	system 'find . -name \'*.java\' -o -name \'*.class\'';
+
 	use Term::ReadLine;
 	my $term = Term::ReadLine->new('Revision Directory Reader');
 	my $prompt = "Pick revision dir(TAB to see options): ";
