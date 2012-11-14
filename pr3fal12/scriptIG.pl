@@ -121,6 +121,9 @@ to give evidence of testing.
 ---------------
 Main methods must actually test the assigned methods.\n";
 
+$FileToDiffFrom = cwd()."/GradingCases/Picture.java.nomain";
+$SubmittedFileToDiffTo = "Picture.java";
+
 
 #examples of non-functional requrements:
 #, grade for 
@@ -1031,6 +1034,14 @@ sub NonFunReqCheck( )  #---------------------------------------------------
     }
 
     print $NonFunGradInstructions;
+
+    if( $FileToDiffFrom )
+    {
+	system("diff $FileToDiffFrom $SubmittedFileToDiffTo");
+    }
+
+
+
 
     if( $VersionHistoryPoints )
     {
