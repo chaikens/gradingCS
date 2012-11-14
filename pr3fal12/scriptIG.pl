@@ -112,8 +112,14 @@ $filesWeBuild = "Picture.class";
 $DoNonFunReqCheck = 1;  # 1 to call NonFunReqCheck function to grade
                         # non-functional requirements
 
-$NonFunGradInstructions = "";
-#"Look at indentation\n";
+$NonFunGradInstructions = 
+"Evaluate Version History and Testingrequirements:
+Part1, Part12, Part123, etc.
+Parts have at least Start and Release versions.
+Version dirs. have both Picture.java and Picture.class files,
+to give evidence of testing.
+---------------
+Main methods must actually test the assigned methods.\n";
 
 
 #examples of non-functional requrements:
@@ -144,6 +150,9 @@ $ReportFileName = "";
 $ReportLikeFile = "";
 $ReportFilePoints   = 0;
 
+
+$VersionHistoryPoints = 10;
+$MainsTestMethodsPoints = 10;
 $RequestOneDirBeSubmitted = 0;
 $OneDirSubmissionPoints = 0; 
 $MakefilePoints = 0;         # Used only when $IsCompilable is true.
@@ -202,7 +211,7 @@ $valueTestsPhase1    = 0.0;
 $valueTestsTotal     += $valueTestsPhase1;
 $valueTestsPhase2    = 0.0;   #May be set each time by setVersionPoints()
 $valueTestsTotal     += $valueTestsPhase2;
-$valueInteractiveTests = 100.0;
+$valueInteractiveTests = 80.0;
 
 $valueTestsTotal     += $valueInteractiveTests;
 $valuePerTest        = "to be computed";  # Only used when $RequiresCompiling=1
@@ -289,7 +298,7 @@ $PenaltyPolicyFile = "$TestCaseDir/penalties";
     ("$TestCaseDir/penalties"   
      );
 
-@PartsIGPoints = (100);
+@PartsIGPoints = (90);
 
 ################# Code Project Specific Special Pretests HERE.
 sub ProjectSpecificSpecialPretests()
@@ -1022,6 +1031,31 @@ sub NonFunReqCheck( )  #---------------------------------------------------
     }
 
     print $NonFunGradInstructions;
+
+    if( $VersionHistoryPoints )
+    {
+	print "Version History Requirements:";
+	$value = getNumber(0.0, 1.0);
+	scoreThisQualityOutof 
+	    "Version History Requirements.",
+	    $value,
+	    $VersionHistoryPoints;
+    }
+
+    if( $MainsTestMethodsPoints )
+    {
+	print "Main methods test the methods you were told to write and TEST:";
+	$value = getNumber(0.0, 1.0);
+	scoreThisQualityOutof 
+	    "Main methods test the methods you were told to write and TEST:",
+	    $value,
+	    $MainsTestMethodsPoints;
+    }
+
+
+
+
+
 
     if( $PedagogicalInstructionsFollowedPoints )
     {

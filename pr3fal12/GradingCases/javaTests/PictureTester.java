@@ -106,7 +106,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		p.show();
 	    }
 	int scin = -1;
-	while( scin > 23 || scin < 0)
+	while( scin > 20 || scin < 0)
 	    {
 		out.println("Rate manip [0-20]:");
 		try {scin = sc.nextInt();}
@@ -235,13 +235,13 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		out.print("" + n + ", ");
 		isum = isum + n;
 	    }
-	if(isum == 100)
+	if(isum == 90)
 	    {
 		out.println("TA: Type C-A to ACCEPT!");
 	    }
 	else
 	    {
-		float sum = isum/((float) 100);
+		float sum = isum/((float) 90);
 		out.println("TA: Type C-G and number " + sum);
 	    }
 	out.println("Goodbye!");
