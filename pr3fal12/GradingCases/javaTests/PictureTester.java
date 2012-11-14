@@ -10,7 +10,7 @@ public class PictureTester //Revised from Oracle's MethodSpy
 
     public static String saveImagesPrefix = System.getenv("IMAGES_PREFIX");
 
-    public static int testChangeWhole()
+    public static int testChangeWhole(Method m)
     {
      Picture p1 = 
 new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
@@ -18,9 +18,17 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	double amt1 = 0.4;
 	double amt2 = 0.9;
 	out.println("Testing changeWhole with amounts " + amt1 + " and " + amt2);
-        p1.changeWhole( amt1 );
+
+	try{
+	    m.invoke(p1,amt1);
+	    m.invoke(p2,amt2);
+            }
+	    catch (Exception e){
+		System.out.println("invoking changeWhole failed.");
+		e.printStackTrace();
+	    }
+	   
         p1.show();
-        p2.changeWhole( amt2);
 	p2.show();
 	out.println("Rate changeWhole[0-20]:");
 	int scin = sc.nextInt();
@@ -47,7 +55,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	    try {
 		retval = m.invoke(p,xU,yU,xL,yL,amount);
             }
-	    catch (InvocationTargetException | IllegalAccessException e){
+	    catch (Exception e){
 		System.out.println("invoke in manip failed.");
 		e.printStackTrace();
 	    }
@@ -86,6 +94,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		      camt);
 		}
 	p.show();
+	/* DONT SEEK ANOTHER STARTING VALUE 
 	out.println("Enter another starting amount value, or 0.0 to stop:");
 	while( (amount = sc.nextDouble()) != 0.0)
 	    {
@@ -105,6 +114,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 			}
 		p.show();
 	    }
+	*/
 	int scin = -1;
 	while( scin > 20 || scin < 0)
 	    {
@@ -130,7 +140,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	    try {
 		retval = m.invoke(p,xM,yM,scale);
             }
-	    catch (InvocationTargetException | IllegalAccessException e){
+	    catch (Exception e){
 		System.out.println("invoking scribble failed.");
 		e.printStackTrace();
 	    }
@@ -210,7 +220,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		//}
 		out.format("%s%n", m.toGenericString());
 		if( m.getName().equals("changeWhole") ) {
-		    scores[0]=testChangeWhole();
+		    scores[0]=testChangeWhole(m);
 		}
 		if( m.getName().equals("scribble") ) {
 		    scores[1]=testscribble(m);

@@ -1,1 +1,6 @@
-javac -classpath /home/faculty1/sdc/GradingSW/pr3fal12/GradingCases:$CLASSPATH PictureTester.java 
+#!/bin/bash
+cp ../Picture.class .
+CLASSPATH=.:$CLASSPATH
+javac PictureTester.java 
+rm Picture.class
+
