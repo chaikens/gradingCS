@@ -86,7 +86,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		      camt);
 		}
 	p.show();
-	out.println("Enter another starting amount value, or 0 to stop:");
+	out.println("Enter another starting amount value, or 0.0 to stop:");
 	while( (amount = sc.nextDouble()) != 0.0)
 	    {
 		p.hide();
@@ -106,7 +106,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		p.show();
 	    }
 	int scin = -1;
-	while( scin > 20 || scin < 0)
+	while( scin > 23 || scin < 0)
 	    {
 		out.println("Rate manip [0-20]:");
 		try {scin = sc.nextInt();}
@@ -115,6 +115,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	if(saveImagesPrefix!=null)
 	    p.write(saveImagesPrefix + m.getName()+".bmp");
 	p.hide();
+	
         return scin;
     }
 
@@ -159,7 +160,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		String Sscale = (""+scale).replace(".","r");
 		p.write(saveImagesPrefix + "scribble" + Sscale + ".bmp");
 	    }
-	out.println("Enter another scale value, or 0 to stop:");
+	out.println("Enter another scale value, or 0.0 to stop:");
 	while( (scale = sc.nextDouble()) != 0.0)
 	    {
 		p.hide();
@@ -174,7 +175,7 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		out.println("When scribble returns true, try to up the scale to make it return false!");
 		out.println("Enter another scale value, or 0 to stop:");
 	    }
-	out.println("Rate scribble[0-20, +5 extra credit]:");
+	out.println("Rate scribble[0-20, +10 extra credit if going out of bounds is detected]:");
 	int scin = sc.nextInt();
 	p.hide();
         return scin;

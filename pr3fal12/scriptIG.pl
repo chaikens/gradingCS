@@ -3156,7 +3156,7 @@ $_[1]: executable name
 ##################################################################
 # INITIALIZE GLOBALS HERE INSTEAD OF BEGINNING OF WHOLE FILE
 $IGtimeout = #20.25; #second
-    1.0;
+    2.0;
 $IGReadMAX = 2000;
 $IGnShow = 250;
 ##################################################################
