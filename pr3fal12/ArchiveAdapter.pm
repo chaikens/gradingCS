@@ -80,10 +80,10 @@ sub findArchiveList($)
 sub returnDirectoryToGradeFromSubmission($)
 {
     my $SubmissionPathname = $_[0];
-    print "ArchiveAdapter: SubmissionPathname=$SubmissionPathname\n\n";
+    #print "ArchiveAdapter: SubmissionPathname=$SubmissionPathname\n\n";
     chdir($SubmissionPathname);
     my @ArchiveList = findArchiveList($SubmissionPathname);
-    print "ArchiveAdapter: ArchiveList[0]=$ArchiveList[0]\n\n";
+    #print "ArchiveAdapter: ArchiveList[0]=$ArchiveList[0]\n\n";
     my $nArchives = 0 + @ArchiveList;
     if( $nArchives == 1 )
     {

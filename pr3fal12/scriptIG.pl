@@ -113,7 +113,7 @@ $DoNonFunReqCheck = 1;  # 1 to call NonFunReqCheck function to grade
                         # non-functional requirements
 
 $NonFunGradInstructions = 
-"Evaluate Version History and Testingrequirements:
+"Evaluate Version History and Testing requirements:
 Part1, Part12, Part123, etc.
 Parts have at least Start and Release versions.
 Version dirs. have both Picture.java and Picture.class files,
