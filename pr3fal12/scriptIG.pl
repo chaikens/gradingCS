@@ -392,18 +392,18 @@ $TestCompileDir = "/tmp/$TAUserName.grading201";
 #
 #
 #
-$ManualBuildFixMessage = 
-"TA: If you don't already have DrJava (or other) open on 
-$TestCompileDir, 
-   type C-Z here,
-   then ./drjava [KEEP drjava open to SAVE TIME!]
-   then fg
-See if you can rename and/or change arguments of these methods in
-Picture.java so you can test the submitted work:
-void changeWhole( double )  
-boolean scribble( int, int, double ) 
-Compile again to get a Picture.class file
-Then type y if you succeeded and n if not.\n";
+$ManualBuildFixMessage = "TA: You may have to look in $TestCompileDir";
+#"TA: If you don't already have DrJava (or other) open on 
+#$TestCompileDir, 
+#   type C-Z here,
+#   then ./drjava [KEEP drjava open to SAVE TIME!]
+#   then fg
+#See if you can rename and/or change arguments of these methods in
+#Picture.java so you can test the submitted work:
+#void changeWhole( double )  
+#boolean scribble( int, int, double ) 
+#Compile again to get a Picture.class file
+#Then type y if you succeeded and n if not.\n";
 
 
 
@@ -1351,7 +1351,7 @@ sub doManualBuild
 
 #    if( $TestCompileDir ne $TestCWD )
 #    {
-	print " into $TestCWD";
+	print " into $TestCompileDir";
 #    }	
 
 
@@ -1425,22 +1425,13 @@ sub tryBuildWithCommand
 
     if($status == 0)
     {
-	if( ! doesSignatureExistInClass(
+#	if( ! doesSignatureExistInClass(
 #	    $TestCompileDir, "public void vignette();", "Picture"))
-	    $TestCompileDir, "public void changeWhole(double);", "Picture"))
-	{
-	    print "TA: You'll have to work in $TestCompileDir soon.\n";
-	    $status = $status + 1;
-	}
-	if( ! doesSignatureExistInClass(
-	    $TestCompileDir, 
-#		  "public void vignette(int, int, int, int, java.awt.Color);", 
-		  "public boolean scribble(int, int, double);", 
-		  "Picture"))
-	{
-	    print "TA: You'll have to work in $TestCompileDir soon.\n";
-	    $status = $status + 1;
-	}
+#	    $TestCompileDir, "public void changeWhole(double);", "Picture"))
+#	{
+#	    print "TA: You'll have to work in $TestCompileDir soon.\n";
+#	    $status = $status + 1;
+#	}
     }
     if ($status == 0)
     {    
@@ -1738,7 +1729,7 @@ sub scoreCheckLate()
     $dispmon = $DUEmon + 1;
 
     print "The no-late due date is : ", $DUEtime, " - ",
-    $DUEmon, "/", $DUEmday, "/", $DUEyear, " ", $DUEhour, ":", $DUEmin, ":",
+    $dispmon, "/", $DUEmday, "/", $dispYear, " ", $DUEhour, ":", $DUEmin, ":",
     "00\n\n";
 
     my($latedays,$is_early);
