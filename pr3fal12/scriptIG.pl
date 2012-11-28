@@ -280,8 +280,13 @@ sub URLize($)
     return $x;
 }
 
-$JavaClassPathCourse = 
-    "/home/faculty1/sdc/public_html/CSI201/Spr12/201Stuff/bookClasses-7-22-09/bookClasses";
+
+
+
+
+$JavaClassPathCourse = $ENV{"HOME"}/201BookClasses;
+
+#    "/home/faculty1/sdc/public_html/CSI201/Spr12/201Stuff/bookClasses-7-22-09/bookClasses";
 $JavaClassPathProject = "$TestCaseDir/classes";
 $JavaClassPathGrading = ".:$JavaClassPathProject:$JavaClassPathCourse";
 $ENV{CLASSPATH} = $JavaClassPathGrading;
