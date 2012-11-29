@@ -41,7 +41,7 @@ chgrp grade201 `pwd`/reports/${USER} `pwd`/reports/$USER.summary   `pwd`/reports
 
 if [ -d `pwd`/WorkSamples ]
 then
-find `pwd`/WorkSamples -exec chgrp grade201 '{}' \;
+find `pwd`/WorkSamples -user $USER -exec chgrp grade201 '{}' \;
 fi
 
 

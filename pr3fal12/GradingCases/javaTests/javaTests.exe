@@ -3,7 +3,7 @@
 #pwd
 GradingSWDir=/home/faculty1/sdc/GradingSW
 GProjDir=$GradingSWDir/pr3fal12
-bookClasses=$HOME/bookClasses
+bookClasses=$HOME/201BookClasses
 PATH=$GradingSWDir/jdk/jdk1.7.0_03/bin:$PATH
 export CLASSPATH=$GProjDir/GradingCases/javaTests:.:$bookClasses
 java PictureTester
