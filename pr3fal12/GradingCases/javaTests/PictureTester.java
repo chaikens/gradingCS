@@ -247,12 +247,12 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	    }
 	if(isum == 90)
 	    {
-		out.println("TA: Type C-A to ACCEPT!");
+		out.println("TA: Type C-A Enter to ACCEPT!");
 	    }
 	else
 	    {
 		float sum = isum/((float) 90);
-		out.println("TA: Type C-G and number " + sum);
+		out.println("TA: Type C-G Enter and this number " + sum);
 	    }
 	out.println("Goodbye!");
 
