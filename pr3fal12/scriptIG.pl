@@ -257,7 +257,7 @@ $EARLYtime = SetDueTime($EARLYyear,$EARLYmon,$EARLYmday,$EARLYhour,$EARLYmin);  
 $DUEmaxdayslate = 7.0;
 
 #Inverse Penalty Rate.  If this is say 12, penalty is 1/12 or 8.333% per day.
-$DUEDaysPer100PercentOff = 100.0/14.0;
+$DUEDaysPer100PercentOff = 14.0;
 
 #Set to > 1 to give bonus for earliness.
 $DUEearlyBonusFactor = 1.10;
@@ -283,8 +283,8 @@ sub URLize($)
 
 
 
-
-$JavaClassPathCourse = $ENV{"HOME"}/201BookClasses;
+$JavaClassPathCourse = $ENV{"HOME"};
+$JavaClassPathCourse = "$JavaClassPathCourse/201BookClasses";
 
 #    "/home/faculty1/sdc/public_html/CSI201/Spr12/201Stuff/bookClasses-7-22-09/bookClasses";
 $JavaClassPathProject = "$TestCaseDir/classes";
