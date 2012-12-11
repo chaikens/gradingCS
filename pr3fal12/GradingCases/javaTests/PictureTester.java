@@ -15,7 +15,7 @@ public class PictureTester //Revised from Oracle's MethodSpy
      Picture p1 = 
 new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	Picture p2 = new Picture(p1);
-	double amt1 = 0.4;
+	double amt1 = 0.15;
 	double amt2 = 0.9;
 	out.println("Testing changeWhole with amounts " + amt1 + " and " + amt2);
 
