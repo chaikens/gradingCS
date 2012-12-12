@@ -207,8 +207,6 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	//	Picture p;
 	Class booleanClass = boolean.class;
 	Class voidClass = void.class;
-	String parts[] = {"changeWhole", "scribble", 
-			  "ManipBoxUniformly", "ManipBoxPatterned"};
 	int scores[] = {0,0,0,0};
 
 	try {
@@ -219,16 +217,16 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 		//  continue;
 		//}
 		out.format("%s%n", m.toGenericString());
-		if( m.getName().equals("changeWhole") ) {
+		if( m.getName().equalsIgnoreCase("changeWhole") ) {
 		    scores[0]=testChangeWhole(m);
 		}
-		if( m.getName().equals("scribble") ) {
+		if( m.getName().equalsIgnoreCase("scribble") ) {
 		    scores[1]=testscribble(m);
 		}
-		if( m.getName().equals("ManipBoxUniformly") ) {
+		if( m.getName().equalsIgnoreCase("ManipBoxUniformly") ) {
 		    scores[2]=testManipBox(m);
 		}
-		if( m.getName().equals("ManipBoxPatterned") ) {
+		if( m.getName().equalsIgnoreCase("ManipBoxPatterned") ) {
 		    scores[3]=testManipBox(m);
 		}
 	    }
