@@ -1,0 +1,2 @@
+export CLASSPATH=.:$HOME/201BookClasses
+PATH=/home/faculty1/sdc/GradingSW/jdk/jdk1.7.0_03/bin:$PATH

@@ -1,0 +1,9 @@
+#!/bin/bash
+#echo hello from javaTests.exe
+#pwd
+GradingSWDir=/home/faculty1/sdc/GradingSW
+GProjDir=$GradingSWDir/pr5fal12
+bookClasses=$HOME/201BookClasses
+PATH=$GradingSWDir/jdk/jdk1.7.0_03/bin:$PATH
+export CLASSPATH=$GProjDir/GradingCases/javaTests:.:$bookClasses
+java Tester
