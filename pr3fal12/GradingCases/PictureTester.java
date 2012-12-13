@@ -10,14 +10,21 @@ public class PictureTester //Revised from Oracle's MethodSpy
 
     public static int testChangeWhole()
     {
+
      Picture p1 = 
 new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
 	Picture p2 = new Picture(p1);
+
+	out.println("Rate changeWhole[0-20]:");
+	//Print the prompt FIRST so the test driver script
+	//doesn't time out in waiting for our output and then
+        //think we want input.
         p1.changeWhole( 0.4 );
         p1.show();
         p2.changeWhole( 0.9 );
 	p2.show();
-	out.println("Rate changeWhole[0-20]:");
+	//Putting the prompt print here forces the user to type
+        //an Enter.
 	int scin = sc.nextInt();
 	p1.hide();
 	p2.hide();
