@@ -311,10 +311,24 @@ $OneIGPoints = 0;
 
 $PenaltyPolicyFile = "$TestCaseDir/penalties";
 
-@PartsIGList = ("javaTests");
-@PartsIGexeName = ("$TestCaseDir/javaTests/javaTests.exe");
+@PartsIGList = #("javaTests");
+    ("T01OnePict","T02TwoPictsSame", 
+     "T03TwoPictsDiff","T04ThreePictsGrowing",
+      "T05FourPictsJagged");
+@PartsIGexeName = ("$TestCaseDir/javaTests/T01OnePict.exe",
+		   "$TestCaseDir/javaTests/T02TwoPictsSame.exe",
+		   "$TestCaseDir/javaTests/T03TwoPictsDiff.exe",
+		   "$TestCaseDir/javaTests/T04ThreePictsGrowing.exe",
+		   "$TestCaseDir/javaTests/T05FourPictsJagged.exe"
+);
 @PartsIGTestCaseDir =
-    ("$TestCaseDir/javaTests");
+    ("$TestCaseDir/javaTests",
+     "$TestCaseDir/javaTests",
+     "$TestCaseDir/javaTests",
+     "$TestCaseDir/javaTests",
+     "$TestCaseDir/javaTests"
+    );
+
 @PartsIGPenaltyPolicyFile =
     ("$TestCaseDir/penalties"   
      );
@@ -3213,8 +3227,8 @@ sub IGwriteGROUTHeading()
 
 
 sub GradeInteractiveCase($$$$)
-# $_[0]: CWD Where the student's program should be, .class or executable!
-# $_[1]: executable name
+# $_[0]: CWD Where the student's program should be, executable or .class!
+# $_[1]: executable name Either student's OR OUR Unit Tester!
 # $_[2]: Test Case Directory
 # $_[3]: Test Case name
 # return value = rating between 0.0 and 1.0
