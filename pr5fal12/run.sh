@@ -67,3 +67,5 @@ if [ x$yIn = xy ]
 fi
 
 
+pkill -s 0 java
+
