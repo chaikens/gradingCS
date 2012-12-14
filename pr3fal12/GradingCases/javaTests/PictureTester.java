@@ -132,7 +132,12 @@ new Picture("/home/faculty1/sdc/public_html/CSI201/Fal12/Proj/Proj3/beach.jpg");
     public static Object scribble(Method m, Picture p, double scale)
     {
 	int xM = p.getWidth()/2;
-	int yM = 2*p.getHeight()/3;
+	int yM = p.getHeight()/3;
+	Turtle Xer = new Turtle(p);
+	Xer.moveTo(xM,yM);
+	Xer.setPenColor(java.awt.Color.black);
+	Xer.forward(10); Xer.forward(-20); Xer.forward(10);
+	Xer.turn(90.0); Xer.forward(10); Xer.forward(-20);
 	boolean returnsBoolean = (m.getReturnType()==boolean.class);
 	if(returnsBoolean)
 	{

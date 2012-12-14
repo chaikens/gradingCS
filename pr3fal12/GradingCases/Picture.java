@@ -85,6 +85,23 @@ public class Picture extends SimplePicture
     
   }
   
+
+    public boolean scribble(int x, int y, double scale)
+    {
+	return true;
+    }
+
+    public void changeWhole(double amount)
+    {
+    }
+
+    public 
+	boolean ManipBoxUniformly( int xMin, int yMin, int xMax, int yMax, double amount )
+    { return true; }
+
+    boolean ManipBoxPatterned( int xMin, int yMin, int xMax, int yMax, double amount )
+    { return true; }
+
   
   public static void main(String[] args) 
   {

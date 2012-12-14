@@ -95,11 +95,18 @@ sub returnDirectoryToGradeFromSubmission($)
 	my $term = Term::ReadLine->new('Revision Directory Reader');
 	my $prompt = "Pick revision dir(TAB to see options): ";
 
-	my $dirFromTA;
-	$dirFromTA = $term->readline($prompt);
+	my $Relative_dirFromTA;
+	$Relative_dirFromTA = $term->readline($prompt);
 
-	chdir($dirFromTA);
-	return cwd();
+	my $Relative_dirFromTAEscaped = escapeEmbeddedUglyChars($Relative_dirFromTA);
+	chdir($Relative_dirFromTA);
+	my $retval = cwd();
+	if($ENV{"GR_DEBUG"})
+	{print "Full Pathname with program to grade is:\n";
+	 print $retval;
+	 print "\nArchiveAdapter done.";
+	}
+	return $retval;
     }
     else
     {

@@ -1,3 +1,8 @@
+if [  x$GR_DEBUG != x ]
+then
+ echo gradersBuilder is in directory
+ pwd
+fi
 export CLASSPATH=.:/home/faculty1/sdc/public_html/CSI201/Spr12/201Stuff/bookClasses-7-22-09/bookClasses
 javac Picture.java 
 

@@ -9,6 +9,15 @@ require Exporter;
 use ArchiveAdapter qw(returnDirectoryToGradeFromSubmission);
 
 
+sub escapeEmbeddedUglyChars($)
+{
+    my $fileName = $_[0];
+    $fileName =~ s/\ /\\\ /g;  #Escape-sequence stupid embedded spaces.
+    $fileName =~ s/\(/\\\(/g;  #Escape-sequence stupid embedded ( HA!!
+    $fileName =~ s/\)/\\\)/g;  #Escape-sequence stupid embedded  )HA!!
+    return $fileName;
+}
+
 
 use Cwd; #for cwd() function
 use Time::Local;
@@ -71,7 +80,7 @@ sub getUserId($)
 
 sub loadTestCompileDir($$)
 {
-    my $TestCompileDir = $_[0];
+    my $TestCompileDir = $_[0];  #Root dir where student's submission unpacked into.
     my $submissionPath = $_[1];
 
     unless( -d $TestCompileDir )
@@ -99,6 +108,8 @@ sub loadTestCompileDir($$)
     print "$FilesReceived";
 
     my $dirToGrade = returnDirectoryToGradeFromSubmission($TestCompileDir);
+
+    my $fullPathEscaped = escapeEmbeddedUglyChars($dirToGrade);
 
     $command = "(cd $dirToGrade; find . -name '*' -print)";
     $FilesReceived = `$command`;

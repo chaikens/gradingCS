@@ -1,6 +1,8 @@
 #!/usr/bin/perl  -w
 # -w is for warnings; strongly recommended by Larry Wall, Perl's author
 
+$GR_DEBUG = $ENV{"GR_DEBUG"};
+
 use SubmissionAdapter qw(submissionTime getUserId loadTestCompileDir);
 #SubmissionAdapter.pm adapts system specific info to the general script.
 #
@@ -46,7 +48,7 @@ $verbose = 0;
 sub int_handler
 {   my($x); 
     print "\nWas that an accidental C-C?
- Type C-Z, ps, kill -9 the scriptIG process if not, then type fg
+ Type C-Z, ps, killall -9 names scriptIG.pl, java, run.sh etc. If not, then type fg
  Press enter until script recovers if yes\n";
     $x = <STDIN>;
 };
@@ -450,7 +452,7 @@ $FilesReceived = ""; #Rel. pathnames of files and dirs. received 1 per line.
 #
 
 
-if ($verbose) { print "$0 called with ARGV=@ARGV\n"; }
+if ($GR_DEBUG) { print "$0 called with ARGV=@ARGV\n"; }
 ############################################################################
 #                                                                          #
 # Execution starts here..                                                  #
@@ -554,7 +556,7 @@ sub gradeOneStudent(@)
 	$ManualFlag = 1;
 	shift @_;     #I hate defaults!
     }
-    if($verbose){print "gradeOneStudent $_[0]";
+    if($GR_DEBUG){print "gradeOneStudent $_[0]";
 		 if($ManualFlag) {print " with ManualFlag on";}
 		 print "\n";}
     my($BuildSuccessful) = 0;
@@ -610,6 +612,11 @@ sub gradeOneStudent(@)
     {
 	($TestCompileDir,$FilesReceived, @FilesReceivedL)
 	    =loadTestCompileDir( $TestCompileDir,  $SubmissionPathName );
+	if($GR_DEBUG){
+	print "The Test Compile Dir we set \$TestCompiledir to is:\n";
+	print $TestCompileDir;
+        }
+
     }
 
 #    if( $ManualFlag && askYes("Check unwanted files?") )
@@ -792,7 +799,7 @@ sub checkRequiredFiles ()
 
     my($index) = 0;
 
-    if ($verbose)
+    if ($GR_DEBUG)
     {
 	print "\nChecking Required Files\n\n";
     }
@@ -1416,8 +1423,16 @@ sub doManualBuild
 
 sub tryBuildWithCommand
 {
+
     chdir ( $TestCompileDir );
 
+    if($GR_DEBUG)
+    {
+	print "-----AFTER chdir( $TestCompileDir ) our cwd() is:";
+	print cwd();
+	print "----HA what do you think?\n";
+
+    }
     print "We are running $GradersBuildCommand...\n";
     my $compileOutput = `$GradersBuildCommand`;
     my $status = $?;
@@ -1853,21 +1868,21 @@ sub runTestCasesPhase1
 
 sub runInteractiveTestCases($$$)
 {
-    print "\n\nrunInteractiveTestCases: $_[0] $_[1] $_[2]\n\n";
+    if($GR_DEBUG) {print "\n\nrunInteractiveTestCases: $_[0] $_[1] $_[2]\n\n";}
 
 
     my($InteractiveTestCaseDir) = $_[0];
     my($exeName) = $_[1];
     my($valueInteractiveTests) = $_[2];
 
-    print "\n\nrunInteract... our cwd is " . cwd( ) . "\n\n";
+    if($GR_DEBUG) {print "\n\nrunInteract... our cwd is " . cwd( ) . "\n\n";}
 
     chdir($InteractiveTestCaseDir);
 # project specific file installation here
 
     my( @TestInFiles ) = <*.txt>; # Glob wildcard
 
-    print "SEEEE--- $TestInFiles[0] should be a .txt file";
+    if($GR_DEBUG) {print "SEEEE--- $TestInFiles[0] should be a .txt file";}
 
 #   (@TestInFiles + 0) puts the array in a "numeric context"
 #   where it will be evaluated to its length.  Sorry Ed. Dj.
@@ -1909,7 +1924,7 @@ sub runInteractiveTestCases($$$)
 					   $testName));
 
     }
-    print "Exiting runInteractiveTestCases !!!!!!\n";
+    print "Finished InteractiveTestCases !!!!!!\n";
 }
 
 #################################################################################
@@ -2023,7 +2038,7 @@ print
 	my($cmdlineArgs) = "";
 
 	# check for command line arg file here 
-	if( $verbose ) {print "testFileName_cmd=$testFileName_cmd\n\n";}
+	if( $GR_DEBUG ) {print "testFileName_cmd=$testFileName_cmd\n\n";}
 
 	if( -e $testFileName_cmd )
 	{
@@ -2409,7 +2424,7 @@ sub runTestCasesPhase2
 	my($cmdlineArgs) = "";
 
 	# check for command line arg file here 
-	if( $verbose ) {print "testFileName_cmd=$testFileName_cmd\n\n";}
+	if( $GR_DEBUG ) {print "testFileName_cmd=$testFileName_cmd\n\n";}
 
 	if( -e $testFileName_cmd )
 	{
@@ -3174,7 +3189,7 @@ sub IGwriteGROUTHeading()
 
 
 sub GradeInteractiveCase($$$$)
-# $_[0]: CWD
+# $_[0]: CWD Where the student's program should be, .class or executable!
 # $_[1]: executable name
 # $_[2]: Test Case Directory
 # $_[3]: Test Case name
@@ -3185,13 +3200,28 @@ sub GradeInteractiveCase($$$$)
 # $SIG{PIPE}
 {
 
-print "GradeInteractiveCase\n
-[0] $_[0] CWD\n
-$_[1]: executable name
- $_[2]: Test Case Directory
- $_[3]: Test Case name
+if($GR_DEBUG) 
+{
+print "GradeInteractiveCase called with parms:
+CWD:$_[0]
+exename:$_[1]
+TestCaseDir:$_[2]
+TestCaseName:$_[3]
 ";
+}
 
+my($TestCaseDir) = $_[2];
+my($testName) = $_[3];
+my($exeName) = $_[1];
+my($IGTestCompileDir) = $_[0];
+chdir( $IGTestCompileDir );
+
+if($GR_DEBUG) 
+{
+print "our cwd is:";
+print cwd();
+print "\n";
+}
 
 
 ##################################################################
@@ -3205,15 +3235,17 @@ $IGnShow = 250;
 $IGGotSIGPIPE = 0;
 $SIG{PIPE} = 'handler';
 
-my($exeName) = $_[1];
-my($IGTestCompileDir) = $_[0];
 
 IGRedoTestGoToLabelYesIKnowItSUgly:
 
-chdir( $IGTestCompileDir );
 
-my($TestCaseDir) = $_[2];
-my($testName) = $_[3];
+if($GR_DEBUG)
+{
+print "GradeInteractiveCase tried to chdir. Now cwd() reports:\n";
+print cwd();
+print "\n";
+}
+
 
 my($TAInstrfname) = "$TestCaseDir/$testName.txt";
 my($testFileName_stdin) = "$TestCaseDir/$testName.in";
@@ -3280,6 +3312,13 @@ else
 my($WDR,$RDR);
 
 chdir $IGTestCompileDir;
+
+if($GR_DEBUG)
+{print "ANOTHER: just before open3 GradeInteractiveCase tried to chdir. Now cwd() reports:\n";
+print cwd();
+print "\n";
+}
+
 
 my($pid) = open3($WDR, $RDR, "", $exeName);
 
