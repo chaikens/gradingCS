@@ -77,6 +77,39 @@ sub findArchiveList($)
 }
 	    
 
+sub pickRelativeDir()
+{
+	use Term::ReadLine;
+	my $term = Term::ReadLine->new('Revision Directory Reader');
+	my $prompt = "Pick revision dir(TAB to see options): ";
+
+	my $Relative_dirFromTA;
+
+	my $done = "";
+	while( !$done )
+	{
+	    $Relative_dirFromTA = $term->readline($prompt);
+	    my $confirmPrompt = "You picked dir\n$Relative_dirFromTA\nOK? ENTER if so, x if not:";
+	    $done = ! $term->readline($confirmPrompt);
+	    if( $done && !$Relative_dirFromTA )
+	    {
+		print "Are you sure you want to pick the root?\nYou're in\n";
+		print cwd(); print "\n";
+		$done = 0;
+
+		my $yes = $term->readline("Type yes if so:");
+		if( $yes eq "yes" ) 
+		{
+		    $done = 1;
+		    $Relative_dirFromTA = ".";
+		}
+	    }
+	}
+	return  $Relative_dirFromTA ;
+}
+
+
+
 sub returnDirectoryToGradeFromSubmission($)
 {
     my $SubmissionPathname = $_[0];
@@ -91,12 +124,7 @@ sub returnDirectoryToGradeFromSubmission($)
 
 	system 'find . -name \'*.java\' -o -name \'*.class\'';
 
-	use Term::ReadLine;
-	my $term = Term::ReadLine->new('Revision Directory Reader');
-	my $prompt = "Pick revision dir(TAB to see options): ";
-
-	my $Relative_dirFromTA;
-	$Relative_dirFromTA = $term->readline($prompt);
+	my $Relative_dirFromTA = pickRelativeDir();
 
 	my $Relative_dirFromTAEscaped = escapeEmbeddedUglyChars($Relative_dirFromTA);
 	chdir($Relative_dirFromTA);
