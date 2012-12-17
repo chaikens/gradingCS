@@ -1,0 +1,7 @@
+Test addPicture(Picture, int where)
+1.0 (accept) if you see Two 1 2 3 4 pictures AND Correct! message.
+0.7 partial credit if you see at least one 1 2 3 4 and
+   a crash or Incorrect error checking! message.
+
+
+

@@ -314,26 +314,31 @@ $PenaltyPolicyFile = "$TestCaseDir/penalties";
 @PartsIGList = #("javaTests");
     ("T01OnePict","T02TwoPictsSame", 
      "T03TwoPictsDiff","T04ThreePictsGrowing",
-      "T05FourPictsJagged");
-@PartsIGexeName = ("$TestCaseDir/javaTests/T01OnePict.exe",
-		   "$TestCaseDir/javaTests/T02TwoPictsSame.exe",
-		   "$TestCaseDir/javaTests/T03TwoPictsDiff.exe",
-		   "$TestCaseDir/javaTests/T04ThreePictsGrowing.exe",
-		   "$TestCaseDir/javaTests/T05FourPictsJagged.exe"
+      "T05FourPictsJagged", "T06FillUp",
+    "T07AddWhere" );
+@PartsIGexeName = ("$TestCaseDir/javaTests/t01/T01OnePict.exe",
+		   "$TestCaseDir/javaTests/t02/T02TwoPictsSame.exe",
+		   "$TestCaseDir/javaTests/t03/T03TwoPictsDiff.exe",
+		   "$TestCaseDir/javaTests/t04/T04ThreePictsGrowing.exe",
+		   "$TestCaseDir/javaTests/t05/T05FourPictsJagged.exe",
+		   "$TestCaseDir/javaTests/t06/T06FillUp.exe",
+		   "$TestCaseDir/javaTests/t07/T07AddWhere.exe"
 );
 @PartsIGTestCaseDir =
-    ("$TestCaseDir/javaTests",
-     "$TestCaseDir/javaTests",
-     "$TestCaseDir/javaTests",
-     "$TestCaseDir/javaTests",
-     "$TestCaseDir/javaTests"
+    ("$TestCaseDir/javaTests/t01",
+     "$TestCaseDir/javaTests/t02",
+     "$TestCaseDir/javaTests/t03",
+     "$TestCaseDir/javaTests/t04",
+     "$TestCaseDir/javaTests/t05",
+     "$TestCaseDir/javaTests/t06",
+     "$TestCaseDir/javaTests/t07"
     );
 
 @PartsIGPenaltyPolicyFile =
-    ("$TestCaseDir/penalties"   
+    (
      );
 
-@PartsIGPoints = (90);
+@PartsIGPoints = (12,11,12,11,12,12,20);
 
 ################# Code Project Specific Special Pretests HERE.
 sub ProjectSpecificSpecialPretests()
@@ -745,7 +750,9 @@ sub gradeOneStudent(@)
 "\n\nInteractive grading of $PartsIGList[$i] cannot be done.\n\n";
 		}
 		print "($PartsIGList[$i])";
-		AddPenaltyorComments($PartsIGPenaltyPolicyFile[$i]);
+
+##########	AddPenaltyorComments($PartsIGPenaltyPolicyFile[$i]);
+
 	    }
 	}
 #	runTestCasesPhase1();

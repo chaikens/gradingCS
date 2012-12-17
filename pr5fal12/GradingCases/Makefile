@@ -1,8 +1,8 @@
 
-all: Album.class javaTests/Tester.class
+all: Album.class javaTests/TesterBase.class
 
 Album.class : Album.java
 	javac Album.java
 
-javaTests/Tester.class : javaTests/Tester.java Album.class
-	(cd javaTests;	./compileTester.cmd)
+javaTests/TesterBase.class : javaTests/TesterBase.java Album.class
+	(cd javaTests;	./compileTester.cmd .)

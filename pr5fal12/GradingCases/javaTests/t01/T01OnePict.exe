@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ x$GR_DEBUG != x ]
+then 
+echo hello from $0
+pwd
+fi
+GradingSWDir=/home/faculty1/sdc/GradingSW
+GProjDir=$GradingSWDir/pr5fal12
+bookClasses=$HOME/201BookClasses
+PATH=$GradingSWDir/jdk/jdk1.7.0_03/bin:$PATH
+export CLASSPATH=$GProjDir/GradingCases/javaTests/t01:.:$bookClasses
+CLASSPATH=$GProjDir/GradingCases/javaTests:$CLASSPATH
+java T01OnePict

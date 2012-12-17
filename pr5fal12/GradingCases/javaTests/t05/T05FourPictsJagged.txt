@@ -1,0 +1,4 @@
+addPicture(Picture) and explore() unit test: 
+Heights 150,180,100,160
+Look for 1 2 3 4
+Follow the directions.

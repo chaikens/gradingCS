@@ -1,0 +1,91 @@
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.lang.reflect.*;
+import static java.lang.System.out;
+import java.util.Scanner;
+
+public class T07AddWhere extends TesterBase
+{
+    private static final String  fmt = "%24s: %s%n";
+
+    public T07AddWhere()
+    {
+	super();
+    }
+
+    public int test1()
+    {
+	if(addPicturePW_M==null || explore_M==null)
+	    {
+		out.println("Your Album is missing the addPicture(Picture,int) or explore()");
+		out.println("method(s).  Can't do AddWhere test.  Score=0");
+		return 0;
+	    }
+	boolean crashed = false;
+	Boolean successes = null;
+	Boolean failure = null;
+	Album alb = null;
+	try{
+	    alb = new Album( 4 );
+	}
+	catch( Exception e )
+	    {
+		out.println("crashed on construction:");
+		e.printStackTrace();
+		crashed = true;
+	    }
+	if( crashed )
+	    {
+		return 0;
+	    }
+	try{
+	    successes = successes && (Boolean) addPicturePW_M.invoke(alb,Two180,0);
+	    successes = successes && (Boolean) addPicturePW_M.invoke(alb,Four160,1);
+	    successes = successes && (Boolean) addPicturePW_M.invoke(alb,Three100,1);
+	    successes = successes && (Boolean) addPicturePW_M.invoke(alb,One150,0);
+	    explore_M.invoke(alb);
+	}
+	catch( Exception e )
+	    {
+		out.println("crashed when adding 4 pictures:");
+		e.printStackTrace();
+		crashed = true;
+	    }
+	if( crashed )
+	    {
+		return 0;
+	    }
+
+	try{
+	    failure = (Boolean) addPicturePW_M.invoke(alb,One150,0);
+	    explore_M.invoke(alb);
+	}
+	catch( Exception e )
+	    {
+		out.println("crashed when adding the 5th picture or exploring after that:");
+		e.printStackTrace();
+		crashed = true;
+	    }
+	if( !crashed && successes && !failure )
+	    {
+		out.println("Correct!");
+		return 20;
+	    }
+	else
+	    {
+		out.println("Incorrect error checking!");
+		return 14;
+	    }
+    }
+
+    public static void main(String[] a)
+    {
+	T07AddWhere me = new T07AddWhere();
+	int nTests = 1;
+	int scores[] = new int[nTests];
+	scores[0] = me.test1();
+	me.printAndAddScores(scores,20);
+    }
+
+
+}

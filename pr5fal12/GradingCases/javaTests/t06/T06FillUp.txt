@@ -1,0 +1,3 @@
+Adds two pictures when capacity is 1
+OK if it doesn't crash, returns true 1st time and false 2nd.
+
