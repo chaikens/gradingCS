@@ -1799,57 +1799,62 @@ sub scoreCheckLate()
 
     my($latedays,$is_early);
 
-    if ( $mtime <= $EARLYtime )
-    {
-	$is_early = 1;
-	$latedays = 0;
-    }
-    else
-    {
+ #   if ( $mtime <= $EARLYtime )
+#    {
+#	$is_early = 1;
+#	$latedays = 0;
+#    }
+#    else
+ #   {
 	$is_early = 0;
-	if( $mtime < $DUEtime )
-	{
-	    $latedays = 0;
-	}
-	else
-	{
+#	if( $mtime < $DUEtime )
+#	{
+#	    $latedays = 0;
+#	}
+#	else
+#	{
 	    $latedays = ($mtime-$DUEtime)/(60.0*60.0*24.0);
-	}
-    }
-    
-    print "Before Late-Check Score : ", $Score,    "\n";
-    print "Number of Days Late     : ", $latedays, "\n";
+#	}
+ #   }
+
+
+ #$latedays CAN BE NEGATIVE!!! for earlyness bonus!
+  
+    print "Before Late-Check Score     : ", $Score,    "\n";
+    print "Number of Days Late(-early) : ", $latedays, "\n";
 
     my($ScoreRounded) = int(($Score*10)+0.5)/10.0;
 
     print GROUT 
-	"\n\nScore before deducting points for lateness: ", $ScoreRounded,"\n";
+	"\n\nScore before deducting points for lateness
+or adding for earliness: ", $ScoreRounded,"\n";
     print SUMOUT $ScoreRounded, " ";
 
     my($LateMod)=1.0;
 
-    if ( $is_early )
-    { 
-	if( $DUEearlyBonusFactor != 1.0 )
-	{
-	    print GROUT "Your project was turned in early!\n";	    
-	    print GROUT "Your grade multiplied by $DUEearlyBonusFactor is ";
-	    $ScorePenalized = $Score * $DUEearlyBonusFactor;
-	    $ScorePenalized = int(($ScorePenalized*10)+0.5)/10.0;	
-	    print GROUT  
-		" $ScorePenalized  points.\n\n";
-	    print SUMOUT $ScorePenalized, "\n";
-	}
-	else
-	{
-	    print GROUT "Your project was turned in on time.\n";
+ #   if ( $is_early )
+  #  { 
+#	if( $DUEearlyBonusFactor != 1.0 )
+#	{
+#	    print GROUT "Your project was turned in early!\n";	    
+#	    print GROUT "Your grade multiplied by $DUEearlyBonusFactor is ";
+#	    $ScorePenalized = $Score * $DUEearlyBonusFactor;
+#	    $ScorePenalized = int(($ScorePenalized*10)+0.5)/10.0;	
+#	    print GROUT  
+#		" $ScorePenalized  points.\n\n";
+#	    print SUMOUT $ScorePenalized, "\n";
+#	}
+#	else
+#	{
+#	    print GROUT "Your project was turned in on time.\n";
 	    print GROUT  
 	"\n\nTotal score for this project: ", $ScoreRounded, " points.\n\n";
-	    print SUMOUT $ScoreRounded, "\n";
-	}
-    }
-    else
-    { 
+#	    print SUMOUT $ScoreRounded, "\n";
+	    print SUMOUT $ScoreRounded, "  ";
+#	}
+#   }
+#  else
+# { 
 	print GROUT 
 	    "Your project was turned in approximately ", 
 	    int(($latedays*1000)+.5)/1000.0, " days late.\n";
@@ -1873,7 +1878,7 @@ sub scoreCheckLate()
 	print GROUT  
 	"\n\nTotal score for this project: ", $ScorePenalized, " points.\n\n";
 	print SUMOUT $ScorePenalized, "\n";
-    }
+#    }
 
 }
 
