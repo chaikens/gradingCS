@@ -32,15 +32,30 @@ sub expandAnArchive($)
     }
     elsif( $archiveFile =~ /.+\.7z/ )
     {
-	my $cmd = "cd " . cwd() . ";7z e  $archiveFile";
+	my $cmd = "cd " . cwd() . ";7z x  $archiveFile";
 	`$cmd`;
 	return 1;
 
     }
     elsif( $archiveFile =~ /.+\.rar/ )
     {
-	my $cmd = "cd " . cwd() . ";unrar e  $archiveFile";
+	my $cmd = "cd " . cwd() . "; ls ; unrar x   $archiveFile";
+	if( $ENV{GR_DEBUG} )
+	{
+	    print "Unrar command: $cmd\n";
+	    print "listing before:\n";
+	    print cwd() . "\n";
+	    print `ls -laR`;
+	    print "pausing for input:"; <STDIN>;
+	}
 	`$cmd`;
+	if( $ENV{GR_DEBUG} )
+	{
+	    print "After Unrar command: $cmd\n";
+	    print "listing after:\n";
+	    print cwd() . "\n";
+	    print `ls -laR`;
+	}
 	return 1;
 
     }
@@ -113,10 +128,12 @@ sub pickRelativeDir()
 sub returnDirectoryToGradeFromSubmission($)
 {
     my $SubmissionPathname = $_[0];
-    #print "ArchiveAdapter: SubmissionPathname=$SubmissionPathname\n\n";
+    if( $ENV{"GR_DEBUG"} ) {
+	print "ArchiveAdapter: SubmissionPathname=$SubmissionPathname\n\n";}
     chdir($SubmissionPathname);
     my @ArchiveList = findArchiveList($SubmissionPathname);
-    #print "ArchiveAdapter: ArchiveList[0]=$ArchiveList[0]\n\n";
+        if( $ENV{"GR_DEBUG"} ) {
+	    print "ArchiveAdapter: ArchiveList[0]=$ArchiveList[0]\n\n";}
     my $nArchives = 0 + @ArchiveList;
     if( $nArchives == 1 )
     {

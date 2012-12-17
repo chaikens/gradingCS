@@ -80,15 +80,18 @@ sub loadTestCompileDir($$)
 	# mode 0700 begins with 0 to tell perl it is in octal
     }
 
-    if ( $verbose ) { print "run rm -rf $TestCompileDir/*\n"; }
+    if ( $ENV{"GR_DEBUG"} ) { print "run rm -rf $TestCompileDir/*\n"; }
     !system("rm -rf $TestCompileDir/*")||die("Cannot clear $TestCompileDir\n");
+    if ( $ENV{"GR_DEBUG"} ) { print "run rm -rf $TestCompileDir/*\n"; }
+    if ( $ENV{"GR_DEBUG"} ) { print `ls -la $TestCompileDir`; }
+
     # r for delete subdirs too, since some people submit them
     # f to suppress error message when the dir is empty
 
-    if( $verbose ) { print "loadTestCompileDir working on $_[0]\n"; }
+    if( $ENV{"GR_DEBUG"} ) { print "loadTestCompileDir working on $_[0]\n"; }
 
     my( $command ) = "cp -r $submissionPath/* $TestCompileDir";
-    if( $verbose ) {print "$command \n";}
+    if( $ENV{"GR_DEBUG"} ) {print "$command \n";}
 
     system($command );
 
