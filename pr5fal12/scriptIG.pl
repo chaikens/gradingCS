@@ -309,7 +309,7 @@ $OneIGTestCaseDir = "";
 $OneIGexeName = "";
 $OneIGPoints = 0;
 
-$PenaltyPolicyFile = "$TestCaseDir/penalties";
+#$PenaltyPolicyFile = "$TestCaseDir/penalties";
 
 @PartsIGList = #("javaTests");
     ("T01OnePict","T02TwoPictsSame", 
